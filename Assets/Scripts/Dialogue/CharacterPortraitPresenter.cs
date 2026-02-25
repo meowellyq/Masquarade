@@ -6,65 +6,87 @@ namespace Masquerade.Dialogue
 {
     public class CharacterPortraitPresenter : MonoBehaviour
     {
-        // Статическая ссылка на себя — надёжнее чем FindFirstObjectByType
         private static CharacterPortraitPresenter _instance;
 
-        [Header("UI")]
-        [SerializeField] private Image portraitImage;
-
-        [Header("Спрайты персонажей")]
+        [Header("Левый портрет (Ксенобия)")]
+        [SerializeField] private Image portraitLeft;
         [SerializeField] private Sprite xenobiaSprite;
+
+        [Header("Правый портрет (Проводник)")]
+        [SerializeField] private Image portraitRight;
         [SerializeField] private Sprite guideSprite;
 
         private void Awake()
         {
-            // Запоминаем себя при старте
             _instance = this;
         }
 
         private void Start()
         {
-            if (portraitImage != null)
-                portraitImage.gameObject.SetActive(false);
+            if (portraitLeft != null)
+                portraitLeft.gameObject.SetActive(false);
+            if (portraitRight != null)
+                portraitRight.gameObject.SetActive(false);
         }
 
-        [YarnCommand("show_portrait")]
-        public static void ShowPortrait(string characterName)
+        [YarnCommand("show_portrait_left")]
+        public static void ShowPortraitLeft(string characterName)
         {
             if (_instance == null)
             {
-                Debug.LogError("CharacterPortraitPresenter не найден на сцене!");
+                Debug.LogError("CharacterPortraitPresenter не найден!");
                 return;
             }
-            _instance.SetPortrait(characterName);
+            _instance.SetPortrait(_instance.portraitLeft,
+                                  characterName,
+                                  _instance.xenobiaSprite);
         }
 
-        [YarnCommand("hide_portrait")]
-        public static void HidePortrait()
+        [YarnCommand("show_portrait_right")]
+        public static void ShowPortraitRight(string characterName)
+        {
+            if (_instance == null)
+            {
+                Debug.LogError("CharacterPortraitPresenter не найден!");
+                return;
+            }
+            _instance.SetPortrait(_instance.portraitRight,
+                                  characterName,
+                                  _instance.guideSprite);
+        }
+
+        [YarnCommand("hide_portrait_left")]
+        public static void HidePortraitLeft()
         {
             if (_instance == null) return;
-
-            if (_instance.portraitImage != null)
-                _instance.portraitImage.gameObject.SetActive(false);
+            if (_instance.portraitLeft != null)
+                _instance.portraitLeft.gameObject.SetActive(false);
         }
 
-        private void SetPortrait(string characterName)
+        [YarnCommand("hide_portrait_right")]
+        public static void HidePortraitRight()
         {
-            Sprite targetSprite = characterName.ToLower() switch
-            {
-                "xenobia" => xenobiaSprite,
-                "guide"   => guideSprite,
-                _         => null
-            };
+            if (_instance == null) return;
+            if (_instance.portraitRight != null)
+                _instance.portraitRight.gameObject.SetActive(false);
+        }
 
-            if (targetSprite == null)
+        [YarnCommand("hide_all_portraits")]
+        public static void HideAllPortraits()
+        {
+            HidePortraitLeft();
+            HidePortraitRight();
+        }
+
+        private void SetPortrait(Image portraitImage, string characterName, Sprite sprite)
+        {
+            if (sprite == null)
             {
-                Debug.LogWarning($"Спрайт для '{characterName}' не найден! " +
-                                 $"Проверь поля Xenobia Sprite и Guide Sprite в Inspector.");
+                Debug.LogWarning($"Спрайт для '{characterName}' не найден!");
                 return;
             }
 
-            portraitImage.sprite = targetSprite;
+            portraitImage.sprite = sprite;
             portraitImage.gameObject.SetActive(true);
         }
     }
