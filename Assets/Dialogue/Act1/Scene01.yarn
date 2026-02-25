@@ -1,0 +1,33 @@
+﻿title: Scene01_Start
+---
+<<show_portrait xenobia>>
+Ксенобия: Где я?.. Что это за место...
+
+<<show_portrait guide>>
+Проводник: Добро пожаловать в Маскарад. Я помогу тебе найти брата.
+
+<<show_portrait xenobia>>
+Ксенобия: Брат... Ксенос. Где он?
+
+<<show_portrait guide>>
+Проводник: Он здесь. Глубоко внутри. Пойдём, я знаю путь.
+
+-> Хорошо, я доверяю тебе.
+    <<shift_axis honesty -10>>
+    <<shift_axis autonomy -15>>
+    <<show_portrait xenobia>>
+    Ксенобия: Хорошо... Веди меня.
+
+-> Я пойду сама.
+    <<shift_axis honesty 10>>
+    <<shift_axis autonomy 15>>
+    <<show_portrait xenobia>>
+    Ксенобия: Я справлюсь без твоей помощи.
+
+-> Мне нужна минута.
+    <<shift_axis honesty 5>>
+    <<show_portrait xenobia>>
+    Ксенобия: Подожди. Мне нужна минута.
+
+<<hide_portrait>>
+===
