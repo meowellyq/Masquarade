@@ -1,59 +1,82 @@
-# Game Balance Table
+# Таблица Баланса "Masquarade"
 
-| Scene           | Choice Description            | Choice Type | Control Axis Change     | World Axis Change          | Truth Axis Change         |
-|------------------|-------------------------------|-------------|--------------------------|----------------------------|--------------------------|
-| Scene 1 (Gates)  | Timid                         | -           | +Dependence              |                            |                          |
-|                  | Cold                          | -           | +Autonomy                |                            |                          |
-| Scene 2 (Fountain)| Calm                         | -           | +Acceptance              |                            |                          |
-|                  | Irritated                     | -           | +Resistance              |                            |                          |
-|                  | Neutral                       | -           | +Autonomy                |                            |                          |
-| Scene 3 (Entry)  | Accept Ritual                | -           | +Acceptance              |                            | +SelfDeception           |
-|                  | Polite Resist                 | -           | +Autonomy                |                            | +Resistance              |
-|                  | Sharp Resist                  | -           | +Resistance              |                            | +Honesty                |
-| Scene 4 (Playfulness)| Ask Guide                 | -           | +Dependence              |                            | +Acceptance              |
-|                  | Answer to please              | -           | +SelfDeception           |                            | +Autonomy               |
-|                  | Answer sharp                  | -           | +Honesty                 |                            | +Resistance             |
-| Scene 5 (Extravagance)| Agree/Role               | -           | +SelfDeception           |                            | +Acceptance             |
-|                  | Refuse/Focus                  | -           | +Honesty                 |                            | +Autonomy               |
-|                  | Deal                          | -           | +Autonomy                |                            | +SelfDeception          |
-| Scene 7 (Fountain 2)| Agree/Rules               | -           | +Dependence              |                            | +Acceptance             |
-|                  | Focus on Brother              | -           | +Autonomy                |                            | +Honesty                |
-|                  | Ask about Guide               | -           | +Dependence              |                            |                          |
-| Scene 8 (Mini-games)| Gold Key                   | -           | +Honesty                 |                            | +15                     |
-|                  | Silver Key                    | -           | +SelfDeception           |                            | +15                     |
-| Scene 8.5 (Pond Crossroads)| Block 1 choices      | -           | +Dependence              |                            | -Autonomy               |
-|                  | Block 2 choices               | -           | +Acceptance              |                            | -Resistance             |
-|                  | Block 3 choices               | -           | +SelfDeception           |                            | -Honesty                |
-| Scene 10 (Hall of Sorrow)| Careful               | -           | +Acceptance              |                            |                          |
-|                  | Run/Search                    | -           | +Resistance              |                            |                          |
-|                  | Stop/Collect                  | -           | +Autonomy                |                            |                          |
-| Scene 11 (Inferiority)| Polite                   | -           | +Acceptance              |                            |                          |
-|                  | Insist                        | -           | +Autonomy                |                            |                          |
-|                  | Silence                       | -           | +Dependence              |                            |                          |
-|                  | Reaction: Rage                | -           | +Resistance              |                            | +Honesty                |
-|                  | Agree                         | -           | +Acceptance              |                            | +SelfDeception          |
-|                  | Confusion                     | -           | +Dependence              |                            |                          |
-| Scene 12 (Guilt) | Copied                        | -           | +Autonomy                |                            |                          |
-|                  | Scary                         | -           | +Honesty                 |                            |                          |
-|                  | Unfair                       | -           | +Resistance              |                            |                          |
-| Scene 15 (Vulnerability)| Help                   | -           | +Dependence              |                            | +Acceptance             |
-|                  | Endure                        | -           | +Acceptance              |                            | +Autonomy               |
-|                  | Reply                         | -           | +Resistance              |                            | +Autonomy               |
-| Scene 15 (Rage)  | Reject/Weak                  | -           | +SelfDeception           |                            | +Dependence             |
-|                  | Fear/Truth                   | -           | +Honesty                 |                            | +Acceptance             |
-|                  | Accept/Prove                 | -           | +Resistance              |                            | +Autonomy               |
-| Scene 16 (Echo)  | Help                          | -           | +Honesty                 |                            | +Autonomy               |
-|                  | Use                           | -           | +SelfDeception           |                            | +Autonomy               |
-| Scene 17 (Filling)| Cold Truth                  | -           | +Honesty                 |                            | +Resistance             |
-|                  | Sweet Oblivion               | -           | +SelfDeception           |                            | +Acceptance             |
-|                  | Pragmatism                   | -           | +Autonomy                |                            | +SelfDeception          |
-| Scene 18.5 (Gazebo Crossroads)| Similar to 8.5    | -           |                          |                            |                          |
-| Scene 19 (Wish)  | 5 specific wishes mapping    | -           |                          |                            |                          |
-
+## Система Осей (Variables)
+Все оси работают в диапазоне от **-100 до +100**.
+*   **Axis 1: Control (Контроль)**
+    *   `-100`: **Зависимость** (Dependence)
+    *   `+100`: **Автономия** (Autonomy)
+*   **Axis 2: World (Мир)**
+    *   `-100`: **Принятие** (Acceptance)
+    *   `+100`: **Сопротивление** (Resistance)
+*   **Axis 3: Truth (Истина)**
+    *   `-100`: **Самообман** (Self-Deception)
+    *   `+100`: **Честность** (Honesty)
 
 ---
 
-## Legend
-- Axis 1: Control (Negative = Dependence, Positive = Autonomy)
-- Axis 2: World (Negative = Acceptance, Positive = Resistance)
-- Axis 3: Truth (Negative = SelfDeception, Positive = Honesty)
+## Таблица Выборов
+
+| Сцена | Описание выбора | Тип | Влияние на оси |
+| :--- | :--- | :--- | :--- |
+| **Сцена 1 (Ворота)** | Согласиться робко | Малый | `Control -5` (Зависимость) |
+| | Согласиться холодно | Малый | `Control +5` (Автономия) |
+| **Сцена 2 (Фонтан)** | Спокойствие | М��лый | `World -5` (Принятие) |
+| | Раздражение | Малый | `World +5` (Сопротивление) |
+| | Нейтральность | Малый | `Control +5` (Автономия) |
+| **Сцена 3 (Вход)** | 1. Принять ритуал | Средний | `World -10`, `Truth -5` |
+| | 2. Сопротивляться вежливо | Средний | `Control +5`, `World +5` |
+| | 3. Сопротивляться резко | Средний | `World +10`, `Truth +5` |
+| **Сцена 4 (Игривость)** | 1. Попросить Проводника | Средний | `Control -10`, `World -5` |
+| | 2. Ответить самой (понравиться) | Средний | `Truth -10`, `Control +5` |
+| | 3. Ответить самой (жёстко) | Средний | `Truth +10`, `World +5` |
+| **Сцена 5 (Экстравагантность)** | 1. Полное согласие (роль) | Средний | `Truth -10`, `World -5` |
+| | 2. Отказ (цель брат) | Средний | `Truth +10`, `Control +5` |
+| | 3. Сделка | Средний | `Control +10`, `Truth -5` |
+| **Сцена 7 (Фонтан)** | 1. Согласиться (правила) | Средний | `Control -5`, `World -5` |
+| | 2. Упор на поиск брата | Средний | `Control +5`, `Truth +5` |
+| | 3. Вопрос о Проводнике | Средний | `Control -10` |
+| **Сцена 8 (Мини-игры)** | Золотой ключ (Правда) | Большой | `Truth +15` |
+| | Серебряный ключ (Ложь) | Большой | `Truth -15` |
+| **Сцена 8.5 (Перепутье 1)** | *Срабатывает блок, где ось ближе к 0* | | |
+| *Блок 1 (Контроль)* | А: Без помощи не справлюсь | **Перепутье** | `Control -20`, `Truth -5` |
+| | Б: Помощь душит | **Перепутье** | `Control +20`, `Truth +5` |
+| *Блок 2 (Мир)* | А: Принять правила | **Перепутье** | `World -20`, `Truth -5` |
+| | Б: Не принимаю правила | **Перепутье** | `World +20`, `Truth +5` |
+| *Блок 3 (Истина)* | А: Здесь спасение? | **Перепутье** | `Truth -20`, `World -5` |
+| | Б: Фальшь не заменит | **Перепутье** | `Truth +20`, `World +5` |
+| **Сцена 10 (Вход в Зал)** | 1. Идти осторожно | Малый | `World -5` |
+| | 2. Искать брата | Малый | `World +5` |
+| | 3. Остановиться | Малый | `Control +5` |
+| **Сцена 11 (Неполноценность)** | 1. Вежливо уточнить | Малый | `World -5` |
+| | 2. Настоять | Малый | `Control +5` |
+| | 3. Замкнуться | Малый | `Control -5` |
+| *Реакция* | 1. Ярость | Малый | `World +5`, `Truth +5` |
+| | 2. Согласие | Малый | `World -5`, `Truth -5` |
+| | 3. Замешательство | Малый | `Control -5` |
+| **Сцена 12 (Вина)** | 1. Я справилась | Средний | `Control +10` |
+| | 2. Страшно | Средний | `Truth +10` |
+| | 3. Несправедливо | Средний | `World +10` |
+| **Сцена 14 (Слом)** | *Выбор направления* | Малый | `+/- 5` к соответствующей оси |
+| **Сцена 15 (Уязвимость)** | 1. Искать помощи | Средний | `Control -10`, `World -5` |
+| | 2. Терпеть | Средний | `World -10`, `Control +5` |
+| | 3. Ответить резко | Средний | `World +10`, `Control +5` |
+| **��цена 15 (Ярость)** | 1. Не хочу принимать | Средний | `Truth -10`, `Control -5` |
+| | 2. Страшно (но приму) | Средний | `Truth +10`, `World -5` |
+| | 3. Я приму (сила) | Средний | `World +10`, `Control +5` |
+| **Сцена 16 (Эхо)** | А: Помогу освободиться | Большой | `Truth +15`, `Control +5` |
+| | Б: Только ради брата | Большой | `Truth -15`, `Control +5` |
+| **Сцена 17 (Наполнение)** | 1. Холодный приговор | Большой | `Truth +15`, `World +10` |
+| | 2. Сладкое забвение | Большой | `Truth -15`, `World -10` |
+| | 3. Прагматизм | Большой | `Control +15`, `Truth -5` |
+| **Сцена 18.5 (Перепутье 2)** | *Срабатывает блок, где ось ближе к 0* | | |
+| *Блок 1 (Контроль)* | А: Я лишь тень | **Перепутье** | `Control -20` |
+| | Б: Моя воля | **Перепутье** | `Control +20` |
+| *Блок 2 (Мир)* | А: Отвращение | **Перепутье** | `World +20` |
+| | Б: Величие | **Перепутье** | `World -20` |
+| *Блок 3 (Истина)* | А: Очарование | **Перепутье** | `Truth -20` |
+| | Б: Сбросить морок | **Перепутье** | `Truth +20` |
+| **Сцена 19 (Желание)** | 1. Сорвать маски | Финал | `Truth +15`, `World +15` |
+| | 2. Счастливы здесь | Финал | `Truth -15`, `World -15` |
+| | 3. Забираю сама | Финал | `Control +15`, `World +15` |
+| | 4. Скажи как спасти | Финал | `Control -15`, `World -15` |
+| | 5. Любую цену | Финал | `Truth +10`, `Control -15` |
