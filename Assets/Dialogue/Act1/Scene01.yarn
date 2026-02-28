@@ -1,5 +1,6 @@
 ﻿title: Scene01_Start
 ---
+<<set_background "garden">>
 <<show_portrait_left xenobia>>
 Ксенобия: Где я?.. Что это за место...
 <<show_portrait_right guide>>

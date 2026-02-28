@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Yarn.Unity;
 
-namespace Masquerade.Dialogue
+namespace Dialogue
 {
     public class CharacterPortraitPresenter : MonoBehaviour
     {
