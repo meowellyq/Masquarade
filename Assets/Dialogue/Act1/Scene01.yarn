@@ -8,17 +8,17 @@
 Ксенобия: Брат... Ксенос. Где он?
 Проводник: Он здесь. Глубоко внутри. Пойдём, я знаю путь.
 -> Хорошо, я доверяю тебе.
-    <<shift_axis honesty -10>>
-    <<shift_axis autonomy -15>>
+    <<shift_axis truth -10>>
+    <<shift_axis control -15>>
     Ксенобия: Хорошо... Веди меня.
     <<jump Scene01_End>>
 -> Я пойду сама.
-    <<shift_axis honesty 10>>
-    <<shift_axis autonomy 15>>
+    <<shift_axis truth 10>>
+    <<shift_axis control 15>>
     Ксенобия: Я справлюсь без твоей помощи.
     <<jump Scene01_End>>
 -> Мне нужна минута.
-    <<shift_axis honesty 5>>
+    <<shift_axis truth 5>>
     Ксенобия: Подожди. Мне нужна минута.
     <<jump Scene01_End>>
 ===
