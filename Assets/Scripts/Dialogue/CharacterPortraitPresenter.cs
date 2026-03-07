@@ -8,13 +8,14 @@ namespace Dialogue
     {
         private static CharacterPortraitPresenter _instance;
 
-        [Header("Левый портрет (Ксенобия)")]
+        [Header("Левый портрет")]
         [SerializeField] private Image portraitLeft;
         [SerializeField] private Sprite xenobiaSprite;
 
-        [Header("Правый портрет (Проводник)")]
+        [Header("Правый портрет")]
         [SerializeField] private Image portraitRight;
         [SerializeField] private Sprite guideSprite;
+        [SerializeField] private Sprite fontaineSprite;
 
         private void Awake()
         {
@@ -29,6 +30,21 @@ namespace Dialogue
                 portraitRight.gameObject.SetActive(false);
         }
 
+        // ─── Поиск спрайта по имени ────────────────────────────
+        private Sprite GetSpriteByName(string characterName)
+        {
+            switch (characterName)
+            {
+                case "xenobia":   return xenobiaSprite;
+                case "guide":     return guideSprite;
+                case "fontaine":  return fontaineSprite;
+                default:
+                    Debug.LogWarning($"Неизвестный персонаж: '{characterName}'. " +
+                                     "Доступные: xenobia, guide, fontaine");
+                    return null;
+            }
+        }
+
         [YarnCommand("show_portrait_left")]
         public static void ShowPortraitLeft(string characterName)
         {
@@ -37,9 +53,8 @@ namespace Dialogue
                 Debug.LogError("CharacterPortraitPresenter не найден!");
                 return;
             }
-            _instance.SetPortrait(_instance.portraitLeft,
-                                  characterName,
-                                  _instance.xenobiaSprite);
+            Sprite sprite = _instance.GetSpriteByName(characterName);
+            _instance.SetPortrait(_instance.portraitLeft, characterName, sprite);
         }
 
         [YarnCommand("show_portrait_right")]
@@ -50,9 +65,8 @@ namespace Dialogue
                 Debug.LogError("CharacterPortraitPresenter не найден!");
                 return;
             }
-            _instance.SetPortrait(_instance.portraitRight,
-                                  characterName,
-                                  _instance.guideSprite);
+            Sprite sprite = _instance.GetSpriteByName(characterName);
+            _instance.SetPortrait(_instance.portraitRight, characterName, sprite);
         }
 
         [YarnCommand("hide_portrait_left")]
@@ -82,7 +96,7 @@ namespace Dialogue
         {
             if (sprite == null)
             {
-                Debug.LogWarning($"Спрайт для '{characterName}' не найден!");
+                Debug.LogWarning($"Спрайт для '{characterName}' не назначен в инспекторе!");
                 return;
             }
 
