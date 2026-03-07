@@ -208,6 +208,7 @@ MonoBehaviour:
   xenobiaSprite: {fileID: 21300000, guid: c8494d4038f233e4894b8da7b8b979ab, type: 3}
   portraitRight: {fileID: 0}
   guideSprite: {fileID: 21300000, guid: d878846868dfa244082bddcb20582f48, type: 3}
+  fontaineSprite: {fileID: 0}
 --- !u!114 &311200376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +357,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6dac414b3460fe43a937058b7625d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1185670308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1185670310}
+  - component: {fileID: 1185670309}
+  m_Layer: 0
+  m_Name: DebugOverlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1185670309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185670308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171437123b96e094d98bae7b6f209d3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1185670310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185670308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1075.1758, y: 656.01715, z: -6.870951}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1287780668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -564,6 +609,23 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2958262986520364888, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9981ce63cac1882478cb189513808b89,
+        type: 2}
+    - target: {fileID: 2958262986520364888, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2133372654392558861, guid: 9981ce63cac1882478cb189513808b89,
+        type: 2}
+    - target: {fileID: 2958262986520364888, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2958262987206614836, guid: 52571f68872914e24837210513edea1d,
         type: 3}
       propertyPath: m_IsActive
@@ -597,6 +659,23 @@ PrefabInstance:
     - target: {fileID: 2958262987206614837, guid: 52571f68872914e24837210513edea1d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2958262987206614838, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9981ce63cac1882478cb189513808b89,
+        type: 2}
+    - target: {fileID: 2958262987206614838, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2133372654392558861, guid: 9981ce63cac1882478cb189513808b89,
+        type: 2}
+    - target: {fileID: 2958262987206614838, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3416868783655305253, guid: 52571f68872914e24837210513edea1d,
@@ -830,6 +909,23 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8020628925673895294, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9981ce63cac1882478cb189513808b89,
+        type: 2}
+    - target: {fileID: 8020628925673895294, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2133372654392558861, guid: 9981ce63cac1882478cb189513808b89,
+        type: 2}
+    - target: {fileID: 8020628925673895294, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8150228081625468094, guid: 52571f68872914e24837210513edea1d,
         type: 3}
       propertyPath: m_Enabled
@@ -1013,6 +1109,7 @@ MonoBehaviour:
   xenobiaSprite: {fileID: 21300000, guid: c8494d4038f233e4894b8da7b8b979ab, type: 3}
   portraitRight: {fileID: 311200376}
   guideSprite: {fileID: 21300000, guid: d878846868dfa244082bddcb20582f48, type: 3}
+  fontaineSprite: {fileID: 21300000, guid: a800a9a2c85a0944cb242dab2d4a04c1, type: 3}
 --- !u!1 &1560843553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,8 +1164,10 @@ MonoBehaviour:
   backgroundImage: {fileID: 1560843556}
   backgrounds:
   - {fileID: 21300000, guid: 530f1a31053376146899bdd3e545c8bc, type: 3}
+  - {fileID: 21300000, guid: 9cd8d4bfdb007b844b9cff8d8f3b22e8, type: 3}
   backgroundNames:
-  - garden
+  - bg_gates
+  - bg_garden_fountain
 --- !u!114 &1560843556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1150,11 +1249,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b70f115998106418209186e51e1277, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceptance: 0
-  honesty: 0
-  autonomy: 0
+  control: 0
+  world: 0
+  truth: 0
   goldenKeys: 0
   silverKeys: 0
+  memoryLoss: 0
 --- !u!4 &1875181534
 Transform:
   m_ObjectHideFlags: 0
@@ -1177,3 +1277,4 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 1287780668}
   - {fileID: 1875181534}
+  - {fileID: 1185670310}
