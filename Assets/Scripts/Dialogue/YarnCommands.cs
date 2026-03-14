@@ -1,9 +1,21 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Yarn.Unity;
 using Core;
 
 public class YarnCommands : MonoBehaviour
 {
+    // ─── Вспомогательный метод записи в Yarn Storage ───────
+    // Используется всеми командами, которым нужно вернуть
+    // значение обратно в Yarn-скрипт через переменную.
+    private static InMemoryVariableStorage GetStorage()
+    {
+        var storage = FindObjectOfType<InMemoryVariableStorage>();
+        if (storage == null)
+            Debug.LogWarning("[YarnCommands] InMemoryVariableStorage не найден!");
+        return storage;
+    }
+
     // ─── Сдвиг оси ─────────────────────────────────────────
     // Yarn: <<shift_axis control 10>>
     // Yarn: <<shift_axis world -15>>
@@ -17,26 +29,15 @@ public class YarnCommands : MonoBehaviour
             return;
         }
         GameStateManager.Instance.ShiftAxis(axisName, value);
-    }
 
-    // ─── Проводник перехватывает управление ──────────────────
-    // Yarn: <<guide_speaks>>
-    [YarnCommand("guide_speaks")]
-    public static void GuideSpeaks()
-    {
-        Debug.Log("Проводник перехватывает управление!");
-        // TODO Этап 2: визуальный эффект перехвата голоса
-    }
-
-    // ─── Глитч-эффект ──────────────────────────────────────
-    // Yarn: <<trigger_glitch low>>
-    // Yarn: <<trigger_glitch medium>>
-    // Yarn: <<trigger_glitch high>>
-    [YarnCommand("trigger_glitch")]
-    public static void TriggerGlitch(string intensity)
-    {
-        Debug.Log($"Глитч запущен: уровень {intensity}");
-        // TODO Этап 7: пост-процессинг глитч-шейдер
+        // Синхронизируем изменённую ось обратно в Yarn Storage
+        var storage = GetStorage();
+        if (storage != null)
+        {
+            storage.SetValue("$control", GameStateManager.Instance.control);
+            storage.SetValue("$world",   GameStateManager.Instance.world);
+            storage.SetValue("$truth",   GameStateManager.Instance.truth);
+        }
     }
 
     // ─── Добавить ключ ─────────────────────────────────────
@@ -52,14 +53,20 @@ public class YarnCommands : MonoBehaviour
         }
         bool isGolden = keyType == "golden";
         GameStateManager.Instance.AddKey(isGolden);
+
+        // Обновляем ключи и флаг BothKeysCollected в Storage
+        var storage = GetStorage();
+        if (storage != null)
+        {
+            storage.SetValue("$golden_keys",        GameStateManager.Instance.goldenKeys);
+            storage.SetValue("$silver_keys",        GameStateManager.Instance.silverKeys);
+            storage.SetValue("$both_keys_collected", GameStateManager.Instance.BothKeysCollected());
+        }
     }
 
     // ─── Перепутье: определить самую неопределённую ось ──────
     // Yarn: <<check_closest_axis>>
-    // После вызова проверяй через: <<if $closest_axis == "control">>
-    //
-    // ВАЖНО: для работы с $closest_axis нужен YarnVariableSync
-    // (см. TODO ниже). Пока значение только в логе.
+    // После вызова: <<if $closest_axis == "control">>
     [YarnCommand("check_closest_axis")]
     public static void CheckClosestAxis()
     {
@@ -67,13 +74,13 @@ public class YarnCommands : MonoBehaviour
         string axis = GameStateManager.Instance.FindClosestAxis();
         Debug.Log($"[Перепутье] Самая неопределённая ось: {axis}");
 
-        // TODO: записать axis в Yarn InMemoryVariableStorage
-        // как $closest_axis, чтобы использовать в <<if>>
+        var storage = GetStorage();
+        storage?.SetValue("$closest_axis", axis);
     }
 
     // ─── Определить финал ──────────────────────────────────
     // Yarn: <<determine_ending>>
-    // После вызова проверяй: <<if $ending == 1>>
+    // После вызова: <<if $ending == 1>>
     [YarnCommand("determine_ending")]
     public static void DetermineEnding()
     {
@@ -81,8 +88,8 @@ public class YarnCommands : MonoBehaviour
         int ending = GameStateManager.Instance.DetermineEnding();
         Debug.Log($"[Финал] Определён финал: {ending}");
 
-        // TODO: записать ending в Yarn InMemoryVariableStorage
-        // как $ending
+        var storage = GetStorage();
+        storage?.SetValue("$ending", ending);
     }
 
     // ─── Определить архетип Проводника ──────────────────────
@@ -95,8 +102,8 @@ public class YarnCommands : MonoBehaviour
         string archetype = GameStateManager.Instance.DetermineGuideArchetype();
         Debug.Log($"[Проводник] Архетип: {archetype}");
 
-        // TODO: записать archetype в Yarn InMemoryVariableStorage
-        // как $guide_type
+        var storage = GetStorage();
+        storage?.SetValue("$guide_type", archetype);
     }
 
     // ─── Определить тип Слома ──────────────────────────────
@@ -109,8 +116,8 @@ public class YarnCommands : MonoBehaviour
         int type = GameStateManager.Instance.DetermineBreakdownType();
         Debug.Log($"[Слом] Тип слома: {type}");
 
-        // TODO: записать type в Yarn InMemoryVariableStorage
-        // как $breakdown_type
+        var storage = GetStorage();
+        storage?.SetValue("$breakdown_type", type);
     }
 
     // ─── Определить содержимое Флакона ──────────────────────
@@ -123,8 +130,8 @@ public class YarnCommands : MonoBehaviour
         string flask = GameStateManager.Instance.DetermineFlaskContent();
         Debug.Log($"[Флакон] Содержимое: {flask}");
 
-        // TODO: записать flask в Yarn InMemoryVariableStorage
-        // как $flask
+        var storage = GetStorage();
+        storage?.SetValue("$flask", flask);
     }
 
     // ─── Проверить потерю памяти ────────────────────────────
@@ -137,8 +144,8 @@ public class YarnCommands : MonoBehaviour
         bool loss = GameStateManager.Instance.memoryLoss;
         Debug.Log($"[Память] Потеря памяти: {loss}");
 
-        // TODO: записать loss в Yarn InMemoryVariableStorage
-        // как $memory_loss
+        var storage = GetStorage();
+        storage?.SetValue("$memory_loss", loss);
     }
 
     // ─── Проверить тип ключей ───────────────────────────────
@@ -151,8 +158,59 @@ public class YarnCommands : MonoBehaviour
         string keyType = GameStateManager.Instance.GetKeyType();
         Debug.Log($"[Ключи] Тип: {keyType}");
 
-        // TODO: записать keyType в Yarn InMemoryVariableStorage
-        // как $key_type
+        var storage = GetStorage();
+        storage?.SetValue("$key_type", keyType);
+    }
+
+    // ─── Загрузка Unity-сцены ──────────────────────────────
+    // Yarn: <<load_scene LabyrinthScene>>
+    [YarnCommand("load_scene")]
+    public static void LoadScene(string sceneName)
+    {
+        if (GameStateManager.Instance != null)
+            GameStateManager.Instance.SyncAxesFromYarn();
+
+        Debug.Log($"[Сцена] Загрузка: {sceneName}");
+        SceneManager.LoadScene(sceneName);
+    }
+
+    // ─── Установить точку возврата в Yarn ──────────────────
+    // Yarn: <<set_yarn_node Scene09_ReturnToFountain>>
+    [YarnCommand("set_yarn_node")]
+    public static void SetYarnNode(string nodeName)
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.currentYarnNode = nodeName;
+        Debug.Log($"[Навигация] Точка возврата: {nodeName}");
+    }
+
+    // ─── Проводник перехватывает управление ──────────────────
+    // Yarn: <<guide_speaks>>
+    [YarnCommand("guide_speaks")]
+    public static void GuideSpeaks()
+    {
+        Debug.Log("[Проводник] Перехватывает управление!");
+        // TODO Этап 2: визуальный эффект перехвата голоса
+    }
+
+    // ─── Глитч-эффект ──────────────────────────────────────
+    // Yarn: <<trigger_glitch low>>
+    // Yarn: <<trigger_glitch medium>>
+    // Yarn: <<trigger_glitch high>>
+    [YarnCommand("trigger_glitch")]
+    public static void TriggerGlitch(string intensity)
+    {
+        Debug.Log($"[Глитч] Уровень: {intensity}");
+        // TODO Этап 7: пост-процессинг глитч-шейдер
+    }
+
+    // ─── Визуальный эффект (общий) ─────────────────────────
+    // Yarn: <<trigger_visual_effect glitch_labyrinth>>
+    [YarnCommand("trigger_visual_effect")]
+    public static void TriggerVisualEffect(string effectName)
+    {
+        Debug.Log($"[Визуал] Эффект: {effectName}");
+        // TODO: вызов пост-процессинга или анимации
     }
 
     // ─── Вывести отладку ────────────────────────────────────
