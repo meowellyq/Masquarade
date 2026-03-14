@@ -16,6 +16,8 @@ namespace Dialogue
         [SerializeField] private Image portraitRight;
         [SerializeField] private Sprite guideSprite;
         [SerializeField] private Sprite fontaineSprite;
+        [SerializeField] private Sprite playfulnessSprite;
+        [SerializeField] public Sprite extravaganceSprite;
 
         private void Awake()
         {
@@ -38,9 +40,11 @@ namespace Dialogue
                 case "xenobia":   return xenobiaSprite;
                 case "guide":     return guideSprite;
                 case "fontaine":  return fontaineSprite;
+                case "playfulness": return playfulnessSprite; 
+                case "extravagance": return extravaganceSprite;
                 default:
                     Debug.LogWarning($"Неизвестный персонаж: '{characterName}'. " +
-                                     "Доступные: xenobia, guide, fontaine");
+                                     "Доступные: xenobia, guide, fontaine, playfulness, extravagance.");
                     return null;
             }
         }
