@@ -5,7 +5,7 @@ using Yarn.Unity;
 namespace Core
 {
     /// <summary>
-    /// Управляет переходами между Unity-сценами и автозапуском Yarn-нод
+    /// Управляет автозапуском Yarn-нод при возврате из геймплейных сцен
     /// </summary>
     public class SceneLoader : MonoBehaviour
     {
@@ -15,19 +15,22 @@ namespace Core
         void Start()
         {
             // Проверить, есть ли сохранённая точка возврата
-            if (GameStateManager.Instance != null && 
+            if (GameStateManager.Instance != null &&
                 !string.IsNullOrEmpty(GameStateManager.Instance.currentYarnNode))
             {
                 string nodeToStart = GameStateManager.Instance.currentYarnNode;
-                Debug.Log($"Автозапуск Yarn-ноды: {nodeToStart}");
-                
-                // Сбросить точку возврата (чтобы не запускалась повторно)
+                Debug.Log($"[SceneLoader] Автозапуск Yarn-ноды: {nodeToStart}");
+
+                // Очистить точку возврата (чтобы не запускалась повторно)
                 GameStateManager.Instance.currentYarnNode = "";
-                
-                // Запустить диалог
+
                 if (dialogueRunner != null)
                 {
                     dialogueRunner.StartDialogue(nodeToStart);
+                }
+                else
+                {
+                    Debug.LogError("[SceneLoader] DialogueRunner не назначен в Inspector!");
                 }
             }
             else
@@ -35,13 +38,18 @@ namespace Core
                 // Дефолтный старт (первая сцена)
                 if (dialogueRunner != null)
                 {
+                    Debug.Log("[SceneLoader] Запуск с начала игры");
                     dialogueRunner.StartDialogue("Scene01_Start");
+                }
+                else
+                {
+                    Debug.LogError("[SceneLoader] DialogueRunner не назначен в Inspector!");
                 }
             }
         }
 
         /// <summary>
-        /// Загрузить сцену из кода C#
+        /// Загрузить сцену из кода C# (например, из MiniGame-контроллеров)
         /// </summary>
         public static void LoadScene(string sceneName)
         {

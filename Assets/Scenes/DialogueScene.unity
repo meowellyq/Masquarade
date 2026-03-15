@@ -208,7 +208,9 @@ MonoBehaviour:
   xenobiaSprite: {fileID: 21300000, guid: c8494d4038f233e4894b8da7b8b979ab, type: 3}
   portraitRight: {fileID: 0}
   guideSprite: {fileID: 21300000, guid: d878846868dfa244082bddcb20582f48, type: 3}
-  fontaineSprite: {fileID: 0}
+  fontaineSprite: {fileID: 21300000, guid: a800a9a2c85a0944cb242dab2d4a04c1, type: 3}
+  playfulnessSprite: {fileID: 21300000, guid: f9ff7e30b36c5de499ab5a115f858b8e, type: 3}
+  extravaganceSprite: {fileID: 21300000, guid: e8b714efcda77034c8962e1151915941, type: 3}
 --- !u!114 &311200376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +359,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6dac414b3460fe43a937058b7625d40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &877470213 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8309902628685535410, guid: 52571f68872914e24837210513edea1d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1287780668}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877470207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bec29c0a230741bdac901dba8da47ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &877470215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877470207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53a8176075d5cb04d809075eff73fe95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogueRunner: {fileID: 877470213}
 --- !u!1 &1185670308
 GameObject:
   m_ObjectHideFlags: 0
@@ -1022,6 +1049,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 877470211}
+    - targetCorrespondingSourceObject: {fileID: 7262066351540048079, guid: 52571f68872914e24837210513edea1d,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 877470215}
     - targetCorrespondingSourceObject: {fileID: 9078442560890639579, guid: 52571f68872914e24837210513edea1d,
         type: 3}
       insertIndex: -1
@@ -1120,6 +1151,8 @@ MonoBehaviour:
   portraitRight: {fileID: 311200376}
   guideSprite: {fileID: 21300000, guid: d878846868dfa244082bddcb20582f48, type: 3}
   fontaineSprite: {fileID: 21300000, guid: a800a9a2c85a0944cb242dab2d4a04c1, type: 3}
+  playfulnessSprite: {fileID: 21300000, guid: f9ff7e30b36c5de499ab5a115f858b8e, type: 3}
+  extravaganceSprite: {fileID: 21300000, guid: e8b714efcda77034c8962e1151915941, type: 3}
 --- !u!1 &1560843553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,6 +1299,10 @@ MonoBehaviour:
   truth: 0
   goldenKeys: 0
   silverKeys: 0
+  hasExtravaganceKey: 0
+  hasInadequacyKey: 0
+  currentYarnNode: Scene01_Start
+  labyrinthVisualEffectApplied: 0
   memoryLoss: 0
 --- !u!4 &1875181534
 Transform:

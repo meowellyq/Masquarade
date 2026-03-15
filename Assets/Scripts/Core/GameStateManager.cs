@@ -28,9 +28,14 @@ namespace Core
         public int goldenKeys = 0;
         public int silverKeys = 0;
 
+        // ─── Прогресс мини-игр лабиринта ───────────────────────
+        [Header("Labyrinth Progress")]
+        public bool hasExtravaganceKey = false; // Пройдена ли мини-игра Экстравагантности
+        public bool hasInadequacyKey   = false; // Пройдена ли мини-игра Неполноценности
+
         // ─── Навигация ─────────────────────────────────────────
         [Header("Navigation")]
-        public string currentYarnNode = "Scene01_Start"; // Точка возврата из лабиринта
+        public string currentYarnNode = "Scene01_Start"; // Точка возврата из лабиринта / мини-игр
         public bool labyrinthVisualEffectApplied = false; // Умылась ли в Фонтане
 
         // ─── Флаги состояния ────────────────────────────────────
@@ -112,6 +117,45 @@ namespace Core
                 silverKeys++;
                 Debug.Log($"Получен серебряный ключ! Всего: {silverKeys}");
             }
+        }
+
+        // ─── Завершение мини-игры и получение ключа ────────────
+        /// <summary>
+        /// Вызывается по итогам мини-игры лабиринта.
+        /// miniGameName: "extravagance" | "inadequacy"
+        /// </summary>
+        public void CompleteMiniGame(string miniGameName, bool isGoldenKey)
+        {
+            switch (miniGameName)
+            {
+                case "extravagance":
+                    hasExtravaganceKey = true;
+                    if (isGoldenKey) goldenKeys++; else silverKeys++;
+                    Debug.Log($"[MiniGame] Экстравагантность пройдена. " +
+                              $"Ключ: {(isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+                    break;
+
+                case "inadequacy":
+                    hasInadequacyKey = true;
+                    if (isGoldenKey) goldenKeys++; else silverKeys++;
+                    Debug.Log($"[MiniGame] Неполноценность пройдена. " +
+                              $"Ключ: {(isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+                    break;
+
+                default:
+                    Debug.LogWarning($"[MiniGame] Неизвестная мини-игра: {miniGameName}. " +
+                                     "Доступные: extravagance, inadequacy");
+                    break;
+            }
+        }
+
+        // ─── Проверка завершения обеих мини-игр ────────────────
+        /// <summary>
+        /// Обе мини-игры пройдены → можно открыть финальную дверь лабиринта.
+        /// </summary>
+        public bool BothMiniGamesCompleted()
+        {
+            return hasExtravaganceKey && hasInadequacyKey;
         }
 
         // ─── Проверка обоих ключей (Сцена лабиринта) ───────────
@@ -250,6 +294,10 @@ namespace Core
             Debug.Log($"║ Серебряных ключей: {silverKeys,5}      ║");
             Debug.Log($"║ Потеря памяти:     {memoryLoss,5}      ║");
             Debug.Log($"║ Оба ключа:         {BothKeysCollected(),5}      ║");
+            Debug.Log("╠══════════════════════════════════╣");
+            Debug.Log($"║ Экстравагантность: {hasExtravaganceKey,5}      ║");
+            Debug.Log($"║ Неполноценность:   {hasInadequacyKey,5}      ║");
+            Debug.Log($"║ Обе мини-игры:     {BothMiniGamesCompleted(),5}      ║");
             Debug.Log("╠══════════════════════════════════╣");
             Debug.Log($"║ Текущий узел:       {currentYarnNode,-12} ║");
             Debug.Log($"║ Ближайшая ось к 0:  {FindClosestAxis(),-12} ║");
