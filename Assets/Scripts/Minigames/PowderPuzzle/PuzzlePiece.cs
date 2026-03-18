@@ -13,7 +13,9 @@ namespace Minigames.PowderPuzzle
         public float snapDistance = 0.5f;
 
         [Header("Sides")]
+        [Tooltip("Спрайт чистой стороны (можно оставить пустым — будет использован текущий)")]
         public Sprite cleanSide;
+        [Tooltip("Спрайт стороны с наклейками (можно оставить пустым — будет использован текущий)")]
         public Sprite decoratedSide;
 
         private bool _isCleanSideUp = true;
@@ -24,6 +26,10 @@ namespace Minigames.PowderPuzzle
         void Awake()
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            // Если спрайты не назначены — запомнить текущий как заглушку для обеих сторон
+            if (cleanSide == null)    cleanSide    = _spriteRenderer.sprite;
+            if (decoratedSide == null) decoratedSide = _spriteRenderer.sprite;
         }
 
         void Update()
@@ -35,7 +41,11 @@ namespace Minigames.PowderPuzzle
         void FlipPiece()
         {
             _isCleanSideUp = !_isCleanSideUp;
+            // Меняем цвет как визуальную подсказку если спрайты одинаковые
             _spriteRenderer.sprite = _isCleanSideUp ? cleanSide : decoratedSide;
+            _spriteRenderer.color  = _isCleanSideUp
+                ? Color.white
+                : new Color(1f, 0.8f, 0.9f); // розоватый = "украшенная" сторона
             Debug.Log($"[PuzzlePiece] Осколок {pieceID} перевёрнут. " +
                       $"Сторона: {(_isCleanSideUp ? "ЧИСТАЯ" : "НАКЛЕЙКИ")}");
         }
@@ -71,6 +81,10 @@ namespace Minigames.PowderPuzzle
             {
                 transform.position = correctSlot.position;
                 _isPlaced = true;
+                // Зафиксировать цвет при укладке
+                _spriteRenderer.color = _isCleanSideUp
+                    ? new Color(0.8f, 1f, 0.8f)  // зеленоватый = встал на место чистой стороной
+                    : new Color(1f, 0.7f, 0.85f); // розовый = встал украшенной
                 FindObjectOfType<PuzzleManager_Extravagance>()?.OnPiecePlaced(_isCleanSideUp);
                 Debug.Log($"[PuzzlePiece] Осколок {pieceID} установлен в слот.");
             }
