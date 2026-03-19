@@ -4,10 +4,6 @@ using Core;
 
 namespace Minigames.Sokoban
 {
-    /// <summary>
-    /// Главный менеджер мини-игры "Каркас Истины".
-    /// Обрабатывает ввод игрока, толкание объектов, проверку победы.
-    /// </summary>
     public class SokobanManager : MonoBehaviour
     {
         [Header("Ссылки")]
@@ -15,13 +11,14 @@ namespace Minigames.Sokoban
         public Transform   playerTransform;
 
         [Header("Всего слотов для заполнения")]
-        [Tooltip("Должно совпадать с количеством SokobanSlot в сцене")]
         public int totalSlots = 3;
 
         [Header("UI")]
         public GameObject completionPanel;
 
         private bool _isComplete = false;
+
+        void Start() { }
 
         void Update()
         {
@@ -35,34 +32,42 @@ namespace Minigames.Sokoban
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) dir = Vector2Int.right;
 
             if (dir == Vector2Int.zero) return;
-
             TryMove(dir);
+        }
+
+        void LateUpdate()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Debug.Log("[Sokoban] Игрок вышел без прохождения.");
+                SceneManager.LoadScene("LabyrinthScene");
+            }
+
+#if UNITY_EDITOR
+            // Отладка: F1 = золотой ключ, F2 = серебряный
+            if (Input.GetKeyDown(KeyCode.F1)) DebugForceComplete(true);
+            if (Input.GetKeyDown(KeyCode.F2)) DebugForceComplete(false);
+#endif
         }
 
         void TryMove(Vector2Int dir)
         {
-            Vector2Int playerCell  = grid.WorldToCell(playerTransform.position);
-            Vector2Int targetCell  = playerCell + dir;
+            Vector2Int playerCell = grid.WorldToCell(playerTransform.position);
+            Vector2Int targetCell = playerCell + dir;
 
-            // Ищем PushableObject в целевой клетке
             PushableObject pushable = GetPushableAt(targetCell);
 
             if (pushable != null)
             {
-                // Попытка толкнуть
                 bool pushed = pushable.TryPush(dir, grid);
-                if (!pushed) return; // заблокировано — игрок тоже не двигается
+                if (!pushed) return;
             }
             else
             {
-                // Просто стена?
                 if (!grid.IsCellWalkable(targetCell, true)) return;
             }
 
-            // Двигаем игрока
             playerTransform.position = grid.CellToWorld(targetCell);
-
-            // Проверка победы
             CheckCompletion();
         }
 
@@ -95,7 +100,6 @@ namespace Minigames.Sokoban
 
             if (filled < totalSlots) return;
 
-            // Победа — определяем ключ
             _isComplete = true;
             int mannequinCount = filled - skeletonCount;
             bool isGoldenKey = skeletonCount > mannequinCount;
@@ -112,23 +116,20 @@ namespace Minigames.Sokoban
             Invoke(nameof(ReturnToLabyrinth), 2f);
         }
 
-        void ReturnToLabyrinth()
-        {
-            SceneManager.LoadScene("LabyrinthScene");
-        }
+        void ReturnToLabyrinth() => SceneManager.LoadScene("LabyrinthScene");
 
-        void Start()
+#if UNITY_EDITOR
+        void DebugForceComplete(bool golden)
         {
-            // Выход по Escape
+            if (_isComplete) return;
+            _isComplete = true;
+            Debug.Log($"[DEBUG] Форсирую завершение Sokoban. Ключ: {(golden ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.CompleteMiniGame("inadequacy", golden);
+            if (completionPanel != null)
+                completionPanel.SetActive(true);
+            Invoke(nameof(ReturnToLabyrinth), 2f);
         }
-
-        void LateUpdate()
-        {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                Debug.Log("[Sokoban] Игрок вышел без прохождения.");
-                SceneManager.LoadScene("LabyrinthScene");
-            }
-        }
+#endif
     }
 }

@@ -4,21 +4,15 @@ using Core;
 
 namespace Minigames.PowderPuzzle
 {
-    /// <summary>
-    /// Управление паззлом "Разбитая пудреница"
-    /// </summary>
     public class PuzzleManager_Extravagance : MonoBehaviour
     {
         [Header("Puzzle Config")]
         public int totalPieces = 6;
         public GameObject completionPanel;
 
-        private int _placedPieces  = 0;
+        private int _placedPieces    = 0;
         private int _cleanSidePieces = 0;
 
-        /// <summary>
-        /// Вызывается каждым осколком при правильной установке
-        /// </summary>
         public void OnPiecePlaced(bool isCleanSide)
         {
             _placedPieces++;
@@ -35,7 +29,7 @@ namespace Minigames.PowderPuzzle
             bool isGoldenKey = _cleanSidePieces > (totalPieces / 2);
 
             Debug.Log($"[Puzzle] Паззл собран! " +
-                      $"Ключ: {(isGoldenKey ? "ЗОЛОТОЙ (чистое зеркало)" : "СЕРЕБРЯНЫЙ (наклейки)")}");
+                      $"Ключ: {(isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
 
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.CompleteMiniGame("extravagance", isGoldenKey);
@@ -55,6 +49,12 @@ namespace Minigames.PowderPuzzle
         {
             if (Input.GetKeyDown(KeyCode.Escape))
                 OnExitButton();
+
+#if UNITY_EDITOR
+            // Отладка: F1 = золотой ключ, F2 = серебряный
+            if (Input.GetKeyDown(KeyCode.F1)) DebugForceComplete(true);
+            if (Input.GetKeyDown(KeyCode.F2)) DebugForceComplete(false);
+#endif
         }
 
         public void OnExitButton()
@@ -62,5 +62,17 @@ namespace Minigames.PowderPuzzle
             Debug.Log("[Puzzle] Игрок вышел без прохождения.");
             SceneManager.LoadScene("LabyrinthScene");
         }
+
+#if UNITY_EDITOR
+        void DebugForceComplete(bool golden)
+        {
+            Debug.Log($"[DEBUG] Форсирую завершение паззла. Ключ: {(golden ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.CompleteMiniGame("extravagance", golden);
+            if (completionPanel != null)
+                completionPanel.SetActive(true);
+            Invoke(nameof(ReturnToLabyrinth), 2f);
+        }
+#endif
     }
 }
