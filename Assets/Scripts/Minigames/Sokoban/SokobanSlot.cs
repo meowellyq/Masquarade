@@ -2,22 +2,20 @@ using UnityEngine;
 
 namespace Minigames.Sokoban
 {
-    /// <summary>
-    /// Каркас-слот. Меняет цвет когда заполнен.
-    /// Скелет → тёмный, Манекен → светлый.
-    /// </summary>
     public class SokobanSlot : MonoBehaviour
     {
         [Header("Визуал")]
-        public Color emptyColor    = new Color(1f, 1f, 1f, 0.3f); // полупрозрачный белый
-        public Color skeletonColor = new Color(0.4f, 0.4f, 0.4f); // тёмно-серый
-        public Color mannequinColor= new Color(1f, 0.95f, 0.8f);  // кремовый
+        // Было: белый полупрозрачный — сливался со скелетом
+        // Стало: жёлтый контурный — сразу видно "сюда нужно поставить"
+        public Color emptyColor     = new Color(1f, 0.85f, 0f, 0.5f);   // жёлтый — "цель"
+        public Color skeletonColor  = new Color(0.35f, 0.35f, 0.35f);   // тёмно-серый
+        public Color mannequinColor = new Color(1f, 0.75f, 0.55f);      // оранжево-бежевый
 
         private SpriteRenderer _sr;
         private bool _isFilled = false;
         private bool _filledBySkeleton = false;
 
-        public bool IsFilled => _isFilled;
+        public bool IsFilled         => _isFilled;
         public bool FilledBySkeleton => _filledBySkeleton;
 
         void Awake()
