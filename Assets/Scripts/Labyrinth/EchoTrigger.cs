@@ -45,13 +45,8 @@ namespace Labyrinth
                 }
             }
 
+            // Только скрываем панель — без подписок
             HidePanel();
-
-            if (confirmButton != null)
-                confirmButton.onClick.AddListener(OnConfirm);
-
-            if (cancelButton != null)
-                cancelButton.onClick.AddListener(OnCancel);
         }
 
         void OnTriggerEnter2D(Collider2D other)
@@ -78,6 +73,19 @@ namespace Labyrinth
                 confirmationText.text = $"Перед вами {echoName}.\nВы готовы войти?";
             }
 
+            // Подписываемся только когда панель показывается
+            // RemoveAllListeners гарантирует что второй триггер не накопится
+            if (confirmButton != null)
+            {
+                confirmButton.onClick.RemoveAllListeners();
+                confirmButton.onClick.AddListener(OnConfirm);
+            }
+            if (cancelButton != null)
+            {
+                cancelButton.onClick.RemoveAllListeners();
+                cancelButton.onClick.AddListener(OnCancel);
+            }
+
             confirmationPanel.SetActive(true);
             Time.timeScale = 0f;
         }
@@ -85,7 +93,15 @@ namespace Labyrinth
         void HidePanel()
         {
             if (confirmationPanel != null)
+            {
+                // Отписываемся когда панель скрывается
+                if (confirmButton != null)
+                    confirmButton.onClick.RemoveAllListeners();
+                if (cancelButton != null)
+                    cancelButton.onClick.RemoveAllListeners();
+
                 confirmationPanel.SetActive(false);
+            }
             Time.timeScale = 1f;
         }
 
@@ -93,7 +109,6 @@ namespace Labyrinth
         {
             Time.timeScale = 1f;
 
-            // ── Вариант В: идём через DialogueScene ──────────────
             if (GameStateManager.Instance != null &&
                 !string.IsNullOrEmpty(introYarnNode))
             {
@@ -103,7 +118,6 @@ namespace Labyrinth
             }
             else
             {
-                // Запасной вариант — прямой переход (если что-то пошло не так)
                 Debug.LogWarning("[EchoTrigger] GameStateManager не найден, прямой переход.");
                 SceneManager.LoadScene(miniGameSceneName);
             }
