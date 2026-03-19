@@ -35,7 +35,7 @@ namespace Core
 
         // ─── Навигация ─────────────────────────────────────────
         [Header("Navigation")]
-        public string currentYarnNode = "Scene01_Start"; // Точка возврата из лабиринта / мини-игр
+        public string currentYarnNode = ""; // Точка возврата из лабиринта / мини-игр
         public bool labyrinthVisualEffectApplied = false; // Умылась ли в Фонтане
 
         // ─── Флаги состояния ────────────────────────────────────

@@ -16,7 +16,8 @@ namespace Minigames.Sokoban
         [Header("UI")]
         public GameObject completionPanel;
 
-        private bool _isComplete = false;
+        private bool _isComplete  = false;
+        private bool _isGoldenKey = false;
 
         void Start() { }
 
@@ -25,7 +26,6 @@ namespace Minigames.Sokoban
             if (_isComplete) return;
 
             Vector2Int dir = Vector2Int.zero;
-
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))    dir = Vector2Int.up;
             if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))  dir = Vector2Int.down;
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))  dir = Vector2Int.left;
@@ -44,7 +44,6 @@ namespace Minigames.Sokoban
             }
 
 #if UNITY_EDITOR
-            // Отладка: F1 = золотой ключ, F2 = серебряный
             if (Input.GetKeyDown(KeyCode.F1)) DebugForceComplete(true);
             if (Input.GetKeyDown(KeyCode.F2)) DebugForceComplete(false);
 #endif
@@ -102,13 +101,13 @@ namespace Minigames.Sokoban
 
             _isComplete = true;
             int mannequinCount = filled - skeletonCount;
-            bool isGoldenKey = skeletonCount > mannequinCount;
+            _isGoldenKey = skeletonCount > mannequinCount;
 
             Debug.Log($"[Sokoban] Завершено! Скелетов: {skeletonCount}, Манекенов: {mannequinCount}. " +
-                      $"Ключ: {(isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+                      $"Ключ: {(_isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
 
             if (GameStateManager.Instance != null)
-                GameStateManager.Instance.CompleteMiniGame("inadequacy", isGoldenKey);
+                GameStateManager.Instance.CompleteMiniGame("inadequacy", _isGoldenKey);
 
             if (completionPanel != null)
                 completionPanel.SetActive(true);
@@ -116,13 +115,25 @@ namespace Minigames.Sokoban
             Invoke(nameof(ReturnToLabyrinth), 2f);
         }
 
-        void ReturnToLabyrinth() => SceneManager.LoadScene("LabyrinthScene");
+        void ReturnToLabyrinth()
+        {
+            string outroNode = _isGoldenKey
+                ? "Echo_Inadequacy_Outro_Golden"
+                : "Echo_Inadequacy_Outro_Silver";
+
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.currentYarnNode = outroNode;
+
+            Debug.Log($"[Sokoban] Переход в DialogueScene, нода: {outroNode}");
+            SceneManager.LoadScene("DialogueScene");
+        }
 
 #if UNITY_EDITOR
         void DebugForceComplete(bool golden)
         {
             if (_isComplete) return;
-            _isComplete = true;
+            _isComplete  = true;
+            _isGoldenKey = golden;
             Debug.Log($"[DEBUG] Форсирую завершение Sokoban. Ключ: {(golden ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.CompleteMiniGame("inadequacy", golden);

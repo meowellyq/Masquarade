@@ -14,11 +14,15 @@ namespace Core
 
         void Start()
         {
+            
+            Debug.Log($"[SceneLoader] Instance существует: {GameStateManager.Instance != null}");
+            Debug.Log($"[SceneLoader] currentYarnNode = '{GameStateManager.Instance?.currentYarnNode}'");
             // Проверить, есть ли сохранённая точка возврата
             if (GameStateManager.Instance != null &&
                 !string.IsNullOrEmpty(GameStateManager.Instance.currentYarnNode))
             {
                 string nodeToStart = GameStateManager.Instance.currentYarnNode;
+                Debug.Log($"[SceneLoader DEBUG] currentYarnNode = '{nodeToStart}' / пустая: {string.IsNullOrEmpty(nodeToStart)}");
                 Debug.Log($"[SceneLoader] Автозапуск Yarn-ноды: {nodeToStart}");
 
                 // Очистить точку возврата (чтобы не запускалась повторно)

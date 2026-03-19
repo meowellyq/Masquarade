@@ -691,6 +691,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   echoType: extravagance
   miniGameSceneName: Minigame_Mirror
+  introYarnNode: Echo_Extravagance_Intro
   echoSprite: {fileID: 0}
   confirmationPanel: {fileID: 264153983}
   confirmationText: {fileID: 1472102306}
@@ -1738,6 +1739,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   echoType: inadequacy
   miniGameSceneName: Minigame_Sculpture
+  introYarnNode: Echo_Inadequacy_Intro
   echoSprite: {fileID: 0}
   confirmationPanel: {fileID: 264153983}
   confirmationText: {fileID: 1472102306}

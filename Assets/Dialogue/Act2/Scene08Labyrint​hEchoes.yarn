@@ -1,0 +1,64 @@
+﻿title: Echo_Extravagance_Intro
+---
+extravagance: О, наконец-то кто-то пришёл...
+extravagance: Посмотри на это. Моя пудреница. Упала и разбилась.
+extravagance: Осколки везде. Я не могу смотреть на себя такой.
+extravagance: Может, ты... соберёшь её обратно?
+-> Войти
+    <<load_scene Minigame_Mirror>>
+-> Не сейчас
+    extravagance: Понимаю. Страшно увидеть правду в зеркале.
+    <<load_scene LabyrinthScene>>
+===
+
+title: Echo_Extravagance_Outro_Golden
+---
+extravagance: Зеркало не врёт...
+extravagance: Я стала старой. И никому не нужной.
+extravagance: *молчит*
+extravagance: Но это... моё лицо. Настоящее.
+extravagance: Возьми. Ты заслужила это.
+<<load_scene LabyrinthScene>>
+===
+
+title: Echo_Extravagance_Outro_Silver
+---
+extravagance: Какая красота! Ни одной морщинки не видно!
+extravagance: Идеальная маска. Идеальное отражение.
+extravagance: *смеётся*
+extravagance: На, держи. За то, что понимаешь прекрасное.
+<<load_scene LabyrinthScene>>
+===
+
+title: Echo_Inadequacy_Intro
+---
+inadequacy: Они всё падают! Падают и ломаются!
+inadequacy: Я делаю каркасы, но они не держатся...
+inadequacy: Нет стержня. Совсем нет стержня внутри.
+inadequacy: Помоги мне. Заполни их. Пожалуйста.
+-> Войти
+    <<load_scene Minigame_Sculpture>>
+-> Не сейчас
+    inadequacy: Конечно. Зачем тебе чужие сломанные вещи.
+    <<load_scene LabyrinthScene>>
+===
+
+title: Echo_Inadequacy_Outro_Golden
+---
+inadequacy: Они выглядят... пугающе.
+inadequacy: Но я чувствую силу внутри.
+inadequacy: *тихо*
+inadequacy: Этот стержень не сломается под тяжестью мира.
+inadequacy: Возьми ключ. Ты не побоялась правды.
+<<load_scene LabyrinthScene>>
+===
+
+title: Echo_Inadequacy_Outro_Silver
+---
+inadequacy: Безупречно! Гладкие, чистые, сияющие!
+inadequacy: Никто не узнает, что внутри пустота.
+inadequacy: Я гений!
+inadequacy: *смеётся нервно*
+inadequacy: Держи. За красоту иллюзии.
+<<load_scene LabyrinthScene>>
+===

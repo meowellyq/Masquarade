@@ -12,6 +12,7 @@ namespace Minigames.PowderPuzzle
 
         private int _placedPieces    = 0;
         private int _cleanSidePieces = 0;
+        private bool _isGoldenKey    = false;
 
         public void OnPiecePlaced(bool isCleanSide)
         {
@@ -26,13 +27,12 @@ namespace Minigames.PowderPuzzle
 
         void CompletePuzzle()
         {
-            bool isGoldenKey = _cleanSidePieces > (totalPieces / 2);
+            _isGoldenKey = _cleanSidePieces > (totalPieces / 2);
 
-            Debug.Log($"[Puzzle] Паззл собран! " +
-                      $"Ключ: {(isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+            Debug.Log($"[Puzzle] Паззл собран! Ключ: {(_isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
 
             if (GameStateManager.Instance != null)
-                GameStateManager.Instance.CompleteMiniGame("extravagance", isGoldenKey);
+                GameStateManager.Instance.CompleteMiniGame("extravagance", _isGoldenKey);
 
             if (completionPanel != null)
                 completionPanel.SetActive(true);
@@ -42,7 +42,16 @@ namespace Minigames.PowderPuzzle
 
         void ReturnToLabyrinth()
         {
-            SceneManager.LoadScene("LabyrinthScene");
+            // Выбрать ноду-реакцию в зависимости от результата
+            string outroNode = _isGoldenKey
+                ? "Echo_Extravagance_Outro_Golden"
+                : "Echo_Extravagance_Outro_Silver";
+
+            if (GameStateManager.Instance != null)
+                GameStateManager.Instance.currentYarnNode = outroNode;
+
+            Debug.Log($"[Puzzle] Переход в DialogueScene, нода: {outroNode}");
+            SceneManager.LoadScene("DialogueScene");
         }
 
         void Update()
@@ -51,7 +60,6 @@ namespace Minigames.PowderPuzzle
                 OnExitButton();
 
 #if UNITY_EDITOR
-            // Отладка: F1 = золотой ключ, F2 = серебряный
             if (Input.GetKeyDown(KeyCode.F1)) DebugForceComplete(true);
             if (Input.GetKeyDown(KeyCode.F2)) DebugForceComplete(false);
 #endif
@@ -59,6 +67,7 @@ namespace Minigames.PowderPuzzle
 
         public void OnExitButton()
         {
+            // Выход без прохождения — просто обратно в лабиринт без диалога
             Debug.Log("[Puzzle] Игрок вышел без прохождения.");
             SceneManager.LoadScene("LabyrinthScene");
         }
@@ -67,6 +76,7 @@ namespace Minigames.PowderPuzzle
         void DebugForceComplete(bool golden)
         {
             Debug.Log($"[DEBUG] Форсирую завершение паззла. Ключ: {(golden ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+            _isGoldenKey = golden;
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.CompleteMiniGame("extravagance", golden);
             if (completionPanel != null)
