@@ -2,12 +2,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Yarn.Unity;
 using Core;
+using Dialogue;
 
 public class YarnCommands : MonoBehaviour
 {
     // ─── Вспомогательный метод записи в Yarn Storage ───────
-    // Используется всеми командами, которым нужно вернуть
-    // значение обратно в Yarn-скрипт через переменную.
     private static InMemoryVariableStorage GetStorage()
     {
         var storage = FindObjectOfType<InMemoryVariableStorage>();
@@ -17,9 +16,7 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Сдвиг оси ─────────────────────────────────────────
-    // Yarn: <<shift_axis control 10>>
-    // Yarn: <<shift_axis world -15>>
-    // Yarn: <<shift_axis truth 20>>
+    // Yarn: shift_axis control 10
     [YarnCommand("shift_axis")]
     public static void ShiftAxis(string axisName, float value)
     {
@@ -30,7 +27,6 @@ public class YarnCommands : MonoBehaviour
         }
         GameStateManager.Instance.ShiftAxis(axisName, value);
 
-        // Синхронизируем изменённую ось обратно в Yarn Storage
         var storage = GetStorage();
         if (storage != null)
         {
@@ -41,8 +37,7 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Добавить ключ ─────────────────────────────────────
-    // Yarn: <<add_key golden>>
-    // Yarn: <<add_key silver>>
+    // Yarn: add_key golden / add_key silver
     [YarnCommand("add_key")]
     public static void AddKey(string keyType)
     {
@@ -54,19 +49,18 @@ public class YarnCommands : MonoBehaviour
         bool isGolden = keyType == "golden";
         GameStateManager.Instance.AddKey(isGolden);
 
-        // Обновляем ключи и флаг BothKeysCollected в Storage
         var storage = GetStorage();
         if (storage != null)
         {
-            storage.SetValue("$golden_keys",        GameStateManager.Instance.goldenKeys);
-            storage.SetValue("$silver_keys",        GameStateManager.Instance.silverKeys);
+            storage.SetValue("$golden_keys",         GameStateManager.Instance.goldenKeys);
+            storage.SetValue("$silver_keys",         GameStateManager.Instance.silverKeys);
             storage.SetValue("$both_keys_collected", GameStateManager.Instance.BothKeysCollected());
         }
     }
 
-    // ─── Перепутье: определить самую неопределённую ось ──────
-    // Yarn: <<check_closest_axis>>
-    // После вызова: <<if $closest_axis == "control">>
+    // ─── Перепутье: определить самую неопределённую ось ────
+    // Yarn: check_closest_axis
+    // После вызова: if $closest_axis == "control"
     [YarnCommand("check_closest_axis")]
     public static void CheckClosestAxis()
     {
@@ -79,8 +73,8 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Определить финал ──────────────────────────────────
-    // Yarn: <<determine_ending>>
-    // После вызова: <<if $ending == 1>>
+    // Yarn: determine_ending
+    // После вызова: if $ending == 1
     [YarnCommand("determine_ending")]
     public static void DetermineEnding()
     {
@@ -92,9 +86,9 @@ public class YarnCommands : MonoBehaviour
         storage?.SetValue("$ending", ending);
     }
 
-    // ─── Определить архетип Проводника ──────────────────────
-    // Yarn: <<determine_guide>>
-    // После вызова: <<if $guide_type == "iconoclast">>
+    // ─── Определить архетип Проводника ─────────────────────
+    // Yarn: determine_guide
+    // После вызова: if $guide_type == "iconoclast"
     [YarnCommand("determine_guide")]
     public static void DetermineGuide()
     {
@@ -107,8 +101,8 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Определить тип Слома ──────────────────────────────
-    // Yarn: <<determine_breakdown>>
-    // После вызова: <<if $breakdown_type == 1>>
+    // Yarn: determine_breakdown
+    // После вызова: if $breakdown_type == 1
     [YarnCommand("determine_breakdown")]
     public static void DetermineBreakdown()
     {
@@ -120,9 +114,9 @@ public class YarnCommands : MonoBehaviour
         storage?.SetValue("$breakdown_type", type);
     }
 
-    // ─── Определить содержимое Флакона ──────────────────────
-    // Yarn: <<determine_flask>>
-    // После вызова: <<if $flask == "black">>
+    // ─── Определить содержимое Флакона ─────────────────────
+    // Yarn: determine_flask
+    // После вызова: if $flask == "black"
     [YarnCommand("determine_flask")]
     public static void DetermineFlask()
     {
@@ -135,8 +129,8 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Проверить потерю памяти ────────────────────────────
-    // Yarn: <<check_memory>>
-    // После вызова: <<if $memory_loss == true>>
+    // Yarn: check_memory
+    // После вызова: if $memory_loss == true
     [YarnCommand("check_memory")]
     public static void CheckMemory()
     {
@@ -149,8 +143,8 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Проверить тип ключей ───────────────────────────────
-    // Yarn: <<check_keys>>
-    // После вызова: <<if $key_type == "golden">>
+    // Yarn: check_keys
+    // После вызова: if $key_type == "golden"
     [YarnCommand("check_keys")]
     public static void CheckKeys()
     {
@@ -163,7 +157,7 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Загрузка Unity-сцены ──────────────────────────────
-    // Yarn: <<load_scene LabyrinthScene>>
+    // Yarn: load_scene LabyrinthScene
     [YarnCommand("load_scene")]
     public static void LoadScene(string sceneName)
     {
@@ -175,7 +169,7 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Установить точку возврата в Yarn ──────────────────
-    // Yarn: <<set_yarn_node Scene09_ReturnToFountain>>
+    // Yarn: set_yarn_node Scene09_ReturnToFountain
     [YarnCommand("set_yarn_node")]
     public static void SetYarnNode(string nodeName)
     {
@@ -184,8 +178,8 @@ public class YarnCommands : MonoBehaviour
         Debug.Log($"[Навигация] Точка возврата: {nodeName}");
     }
 
-    // ─── Проводник перехватывает управление ──────────────────
-    // Yarn: <<guide_speaks>>
+    // ─── Проводник перехватывает управление ────────────────
+    // Yarn: guide_speaks
     [YarnCommand("guide_speaks")]
     public static void GuideSpeaks()
     {
@@ -194,9 +188,7 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Глитч-эффект ──────────────────────────────────────
-    // Yarn: <<trigger_glitch low>>
-    // Yarn: <<trigger_glitch medium>>
-    // Yarn: <<trigger_glitch high>>
+    // Yarn: trigger_glitch low / medium / high
     [YarnCommand("trigger_glitch")]
     public static void TriggerGlitch(string intensity)
     {
@@ -205,7 +197,7 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Визуальный эффект (общий) ─────────────────────────
-    // Yarn: <<trigger_visual_effect glitch_labyrinth>>
+    // Yarn: trigger_visual_effect glitch_labyrinth
     [YarnCommand("trigger_visual_effect")]
     public static void TriggerVisualEffect(string effectName)
     {
@@ -213,8 +205,33 @@ public class YarnCommands : MonoBehaviour
         // TODO: вызов пост-процессинга или анимации
     }
 
+    // ─── Катсцена ───────────────────────────────────────────
+    // Yarn: cutscene show pond_bench
+    // Yarn: cutscene hide
+    [YarnCommand("cutscene")]
+    public static void Cutscene(string action, string imageName = "")
+    {
+        var controller = FindObjectOfType<КатсценаКонтроллер>();
+        if (controller == null)
+        {
+            Debug.LogWarning("[Катсцена] КатсценаКонтроллер не найден на сцене!");
+            return;
+        }
+
+        if (action == "show")
+        {
+            controller.ShowCutscene(imageName);
+            Debug.Log($"[Катсцена] Показываем: {imageName}");
+        }
+        else if (action == "hide")
+        {
+            controller.HideCutscene();
+            Debug.Log("[Катсцена] Скрываем катсцену");
+        }
+    }
+
     // ─── Вывести отладку ────────────────────────────────────
-    // Yarn: <<debug_state>>
+    // Yarn: debug_state
     [YarnCommand("debug_state")]
     public static void DebugState()
     {
