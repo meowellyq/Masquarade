@@ -1,4 +1,4 @@
-﻿title: Echo_Экстравагантность_Intro
+﻿title: Echo_Extravagance_Intro
 ---
 Экстравагантность: О, наконец-то кто-то пришёл...
 Экстравагантность: Посмотри на это. Моя пудреница. Упала и разбилась.
@@ -11,7 +11,7 @@
     <<load_scene LabyrinthScene>>
 ===
 
-title: Echo_Экстравагантность_Outro_Golden
+title: Echo_Extravagance_Outro_Golden
 ---
 Экстравагантность: Зеркало не врёт...
 Экстравагантность: Я стала старой. И никому не нужной.
@@ -21,7 +21,7 @@ title: Echo_Экстравагантность_Outro_Golden
 <<load_scene LabyrinthScene>>
 ===
 
-title: Echo_Экстравагантность_Outro_Silver
+title: Echo_Extravagance_Outro_Silver
 ---
 Экстравагантность: Какая красота! Ни одной морщинки не видно!
 Экстравагантность: Идеальная маска. Идеальное отражение.
@@ -30,7 +30,7 @@ title: Echo_Экстравагантность_Outro_Silver
 <<load_scene LabyrinthScene>>
 ===
 
-title: Echo_Неполноценность_Intro
+title: Echo_Inadequacy_Intro
 ---
 Неполноценность: Они всё падают! Падают и ломаются!
 Неполноценность: Я делаю каркасы, но они не держатся...
@@ -43,7 +43,7 @@ title: Echo_Неполноценность_Intro
     <<load_scene LabyrinthScene>>
 ===
 
-title: Echo_Неполноценность_Outro_Golden
+title: Echo_Inadequacy_Outro_Golden
 ---
 Неполноценность: Они выглядят... пугающе.
 Неполноценность: Но я чувствую силу внутри.
@@ -53,12 +53,12 @@ title: Echo_Неполноценность_Outro_Golden
 <<load_scene LabyrinthScene>>
 ===
 
-title: Echo_Неполноценность_Outro_Silver
+title: Echo_Inadequacy_Outro_Silver
 ---
 Неполноценность: Безупречно! Гладкие, чистые, сияющие!
 Неполноценность: Никто не узнает, что внутри пустота.
 Неполноценность: Я гений!
 Неполноценность: *смеётся нервно*
-Неполноценность: Держи. За красоту иллюзии.
+Неполноц��нность: Держи. За красоту иллюзии.
 <<load_scene LabyrinthScene>>
 ===
