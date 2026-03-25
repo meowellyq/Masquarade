@@ -5,14 +5,16 @@ using Core;
 
 namespace Labyrinth
 {
-    /// <summary>
-    /// Триггер Фонтана в лабиринте (проверяет наличие ключей)
-    /// </summary>
+    // Триггер Фонтана в лабиринте
+    // Первый визит (до ключей): подсказка собрать ключи
+    // Второй визит (оба ключа): запускает Scene09_ReturnToFountain
+    // После сдачи ключей: показывает короткое сообщение, больше не реагирует
     public class FountainTrigger : MonoBehaviour
     {
-        [Header("UI Notification")]
-        [Tooltip("Текстовое поле для сообщения 'Нужны все ключи' (опционально)")]
+        [Header("UI")]
         public TextMeshProUGUI notificationText;
+
+        private bool _isTriggering = false;
 
         void Start()
         {
@@ -24,36 +26,55 @@ namespace Labyrinth
         {
             if (!other.CompareTag("Player")) return;
             if (GameStateManager.Instance == null) return;
+            if (_isTriggering) return;
 
-            if (GameStateManager.Instance.BothMiniGamesCompleted())
+            var gsm = GameStateManager.Instance;
+
+            // Фонтан уже пройден — короткое напоминание куда идти
+            if (gsm.fountainDone)
             {
-                Debug.Log("[FountainTrigger] Все ключи собраны. Возврат к диалогу.");
-                GameStateManager.Instance.currentYarnNode = "Scene09_ReturnToFountain";
+                ShowHint("Иди к пруду в правом углу лабиринта.");
+                return;
+            }
+
+            // Оба ключа есть — запускаем диалог
+            if (gsm.BothMiniGamesCompleted())
+            {
+                _isTriggering = true;
+                Debug.Log("[FountainTrigger] Оба ключа собраны. Запускаем Scene09.");
+                gsm.currentYarnNode = "Scene09_ReturnToFountain";
                 SceneManager.LoadScene("DialogueScene");
+                return;
             }
-            else
-            {
-                Debug.Log("[FountainTrigger] Недостаточно ключей.");
-                ShowNotification();
-            }
+
+            // Ключей не хватает — подсказка
+            int missing = 0;
+            if (!gsm.hasExtravaganceKey) missing++;
+            if (!gsm.hasInadequacyKey)   missing++;
+
+            string hint = missing == 2
+                ? "Мне нужно два ключа. Найди Эхо в лабиринте."
+                : "Осталось найти ещё один ключ.";
+
+            ShowHint(hint);
         }
 
         void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
-                HideNotification();
+                HideHint();
         }
 
-        void ShowNotification()
+        void ShowHint(string message)
         {
             if (notificationText != null)
             {
-                notificationText.text = "Вы не собрали все ключи. Найдите Эхо в лабиринте.";
+                notificationText.text = message;
                 notificationText.gameObject.SetActive(true);
             }
         }
 
-        void HideNotification()
+        void HideHint()
         {
             if (notificationText != null)
                 notificationText.gameObject.SetActive(false);

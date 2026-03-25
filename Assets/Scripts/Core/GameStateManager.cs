@@ -41,6 +41,9 @@ namespace Core
         // ─── Флаги состояния ────────────────────────────────────
         [Header("Состояние")]
         public bool memoryLoss = false; // Потеря памяти (для диалогов)
+        public bool fountainDone = false;
+        public bool pondVisited = false; 
+        
 
         // ─── Инициализация ─────────────────────────────────────
         private void Awake()

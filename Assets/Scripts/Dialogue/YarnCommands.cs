@@ -238,4 +238,24 @@ public class YarnCommands : MonoBehaviour
         if (GameStateManager.Instance == null) return;
         GameStateManager.Instance.DebugPrintAllValues();
     }
+    
+    // ─── Отметить что Фонтан пройден ───────────────────────
+// Yarn: set_fountain_done
+    [YarnCommand("set_fountain_done")]
+    public static void SetFountainDone()
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.fountainDone = true;
+        Debug.Log("[Фонтан] Ключи сданы, дверь у пруда открыта.");
+    }
+    
+    // ─── Отметить что пруд посещён ─────────────────────────
+// Yarn: set_pond_visited
+    [YarnCommand("set_pond_visited")]
+    public static void SetPondVisited()
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.pondVisited = true;
+        Debug.Log("[Пруд] Сцена у пруда пройдена.");
+    }
 }

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Core;
 
 public class DebugOverlay : MonoBehaviour
@@ -6,7 +7,6 @@ public class DebugOverlay : MonoBehaviour
     private bool _isVisible = true;
     private Vector2 _scrollPos;
 
-    // Список доступных Yarn-нод для быстрого перехода
     private readonly string[] _sceneNodes = new string[]
     {
         "Scene01_Start",
@@ -16,7 +16,8 @@ public class DebugOverlay : MonoBehaviour
         "Scene05_Start",
         "Scene07_Start",
         "Scene08_Start",
-        "Scene08_5_Start",
+        "Scene08_5_Pond",
+        "Scene09_ReturnToFountain",
         "Scene10_Start",
         "Scene11_Start",
         "Scene12_Start",
@@ -52,7 +53,7 @@ public class DebugOverlay : MonoBehaviour
         GUI.skin.label.fontSize = 14;
 
         float panelWidth = 320f;
-        float panelHeight = 460f;
+        float panelHeight = 580f;
         float x = Screen.width - panelWidth - 10f;
         float y = 10f;
 
@@ -84,6 +85,18 @@ public class DebugOverlay : MonoBehaviour
         GUILayout.Label($"<b>Ending: <color=cyan>{ending}</color></b>  " +
                         $"Keys: G:{gsm.goldenKeys} S:{gsm.silverKeys}", richLabel);
 
+        // ─── Флаги ──────────────────────────────────────────
+        string pondColor    = gsm.pondVisited    ? "lime" : "red";
+        string fountainColor = gsm.fountainDone  ? "lime" : "red";
+        string extravColor  = gsm.hasExtravaganceKey ? "lime" : "red";
+        string inadequColor = gsm.hasInadequacyKey   ? "lime" : "red";
+        GUILayout.Label(
+            $"Pond:<color={pondColor}>{gsm.pondVisited}</color>  " +
+            $"Fountain:<color={fountainColor}>{gsm.fountainDone}</color>  " +
+            $"Extr:<color={extravColor}>{gsm.hasExtravaganceKey}</color>  " +
+            $"Inad:<color={inadequColor}>{gsm.hasInadequacyKey}</color>",
+            richLabel);
+
         GUILayout.Space(8);
 
         // ─── Кнопки осей ────────────────────────────────────
@@ -109,10 +122,47 @@ public class DebugOverlay : MonoBehaviour
 
         GUILayout.Space(8);
 
-        // ─── Переход к сценам ───────────────────────────────
-        GUILayout.Label("<b>Jump to scene:</b>", richLabel);
+        // ─── Ключи ──────────────────────────────────────────
+        GUILayout.Label("<b>Keys:</b>", richLabel);
 
-        _scrollPos = GUILayout.BeginScrollView(_scrollPos, GUILayout.Height(150));
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("G +1"))  { gsm.goldenKeys++; gsm.hasExtravaganceKey = true; }
+        if (GUILayout.Button("G -1"))  { gsm.goldenKeys = Mathf.Max(0, gsm.goldenKeys - 1); }
+        if (GUILayout.Button("S +1"))  { gsm.silverKeys++; gsm.hasInadequacyKey = true; }
+        if (GUILayout.Button("S -1"))  { gsm.silverKeys = Mathf.Max(0, gsm.silverKeys - 1); }
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Оба золотых"))
+        {
+            gsm.goldenKeys = 2; gsm.silverKeys = 0;
+            gsm.hasExtravaganceKey = true; gsm.hasInadequacyKey = true;
+        }
+        if (GUILayout.Button("Оба серебряных"))
+        {
+            gsm.silverKeys = 2; gsm.goldenKeys = 0;
+            gsm.hasExtravaganceKey = true; gsm.hasInadequacyKey = true;
+        }
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(8);
+
+        // ─── Сцены ──────────────────────────────────────────
+        GUILayout.Label("<b>Load scene:</b>", richLabel);
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("DialogueScene"))
+            SceneManager.LoadScene("DialogueScene");
+        if (GUILayout.Button("LabyrinthScene"))
+            SceneManager.LoadScene("LabyrinthScene");
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(5);
+
+        // ─── Переход к Yarn-нодам ───────────────────────────
+        GUILayout.Label("<b>Jump to node:</b>", richLabel);
+
+        _scrollPos = GUILayout.BeginScrollView(_scrollPos, GUILayout.Height(130));
 
         for (int i = 0; i < _sceneNodes.Length; i += 3)
         {
@@ -122,12 +172,11 @@ public class DebugOverlay : MonoBehaviour
                 string nodeName = _sceneNodes[j];
                 string shortName = nodeName.Replace("Scene", "Sc.")
                                            .Replace("_Start", "")
+                                           .Replace("ReturnToFountain", "Fountain")
                                            .Replace("_5", ".5");
 
                 if (GUILayout.Button(shortName, GUILayout.Width(85)))
-                {
                     JumpToNode(nodeName);
-                }
             }
             GUILayout.EndHorizontal();
         }
@@ -136,41 +185,36 @@ public class DebugOverlay : MonoBehaviour
 
         GUILayout.Space(5);
 
-        // ─── Сброс ─────────────────────────────────────────
+        // ─── Сброс ──────────────────────────────────────────
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Reset all"))
         {
-            gsm.control = 0;
-            gsm.world = 0;
-            gsm.truth = 0;
-            gsm.goldenKeys = 0;
-            gsm.silverKeys = 0;
-            Debug.Log("[Debug] All axes reset");
+            gsm.control = 0; gsm.world = 0; gsm.truth = 0;
+            gsm.goldenKeys = 0; gsm.silverKeys = 0;
+            gsm.hasExtravaganceKey = false; gsm.hasInadequacyKey = false;
+            gsm.fountainDone = false; gsm.pondVisited = false;
+            Debug.Log("[Debug] Полный сброс состояния");
         }
         if (GUILayout.Button("Log state"))
-        {
             gsm.DebugPrintAllValues();
-        }
         GUILayout.EndHorizontal();
 
         GUILayout.EndArea();
     }
 
-    // ─── Переход к Yarn-ноде ────────────────────────────────
     private void JumpToNode(string nodeName)
     {
-        // Ищем DialogueRunner через FindObjectOfType
         var runner = FindObjectOfType<Yarn.Unity.DialogueRunner>();
         if (runner == null)
         {
-            Debug.LogError("[Debug] DialogueRunner not found in scene!");
+            // Если мы не в DialogueScene — загружаем её и передаём ноду
+            GameStateManager.Instance.currentYarnNode = nodeName;
+            SceneManager.LoadScene("DialogueScene");
             return;
         }
 
         if (runner.IsDialogueRunning)
-        {
             runner.Stop();
-        }
 
         runner.StartDialogue(nodeName);
         Debug.Log($"[Debug] Jump to: {nodeName}");
