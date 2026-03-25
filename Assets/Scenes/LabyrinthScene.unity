@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notificationText: {fileID: 1724908577}
-  nextScene: Scene10
+  entryYarnNode: Scene10_Start
 --- !u!212 &103143848
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1748,6 +1748,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1faa079e9fa6bc74bbe614c62a63a2a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notificationText: {fileID: 0}
 --- !u!58 &1796902866
 CircleCollider2D:
   m_ObjectHideFlags: 0

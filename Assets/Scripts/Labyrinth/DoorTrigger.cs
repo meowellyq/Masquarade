@@ -5,14 +5,15 @@ using Core;
 
 namespace Labyrinth
 {
-    // Дверь в Зал Печали — открывается только после сцены у пруда
     public class DoorTrigger : MonoBehaviour
     {
         [Header("UI")]
         public TextMeshProUGUI notificationText;
 
-        [Header("Следующая сцена")]
-        public string nextScene = "HallOfSorrow";
+        [Header("Yarn нода после входа в дверь")]
+        public string entryYarnNode = "Scene10_Start";
+
+        private bool _isTriggering = false;
 
         void Start()
         {
@@ -24,16 +25,21 @@ namespace Labyrinth
         {
             if (!other.CompareTag("Player")) return;
             if (GameStateManager.Instance == null) return;
-            Debug.Log($"[DoorTrigger] Вошёл объект: {other.name}, Tag: {other.tag}");
+            if (_isTriggering) return;
+
+            Debug.Log($"[DoorTrigger] Вошёл: {other.name}, Tag: {other.tag}");
+
             if (GameStateManager.Instance.pondVisited)
             {
-                Debug.Log("[DoorTrigger] Дверь открыта. Переход в Зал Печали.");
-                SceneManager.LoadScene(nextScene);
+                _isTriggering = true;
+                Debug.Log("[DoorTrigger] Дверь открыта. Запускаем Yarn-ноду.");
+                GameStateManager.Instance.currentYarnNode = entryYarnNode;
+                SceneManager.LoadScene("DialogueScene");
             }
             else
             {
                 Debug.Log("[DoorTrigger] Дверь закрыта — пруд не посещён.");
-                ShowHint();
+                ShowHint("Дверь не поддаётся.\nМожет, стоит осмотреть пруд?");
             }
         }
 
@@ -43,11 +49,11 @@ namespace Labyrinth
                 HideHint();
         }
 
-        void ShowHint()
+        void ShowHint(string message)
         {
             if (notificationText != null)
             {
-                notificationText.text = "Дверь не поддаётся.\nМожет, стоит осмотреть пруд?";
+                notificationText.text = message;
                 notificationText.gameObject.SetActive(true);
             }
         }
