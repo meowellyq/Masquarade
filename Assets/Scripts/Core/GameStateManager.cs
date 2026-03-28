@@ -43,6 +43,7 @@ namespace Core
         public bool memoryLoss = false; // Потеря памяти (для диалогов)
         public bool fountainDone = false;
         public bool pondVisited = false; 
+        public bool hallOfSorrowEntered = false;
         
 
         // ─── Инициализация ─────────────────────────────────────

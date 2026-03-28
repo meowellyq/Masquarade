@@ -258,4 +258,14 @@ public class YarnCommands : MonoBehaviour
         GameStateManager.Instance.pondVisited = true;
         Debug.Log("[Пруд] Сцена у пруда пройдена.");
     }
+    
+    // ─── Отметить что Зал Печали посещён ───────────────────
+// Yarn: set_hall_entered
+    [YarnCommand("set_hall_entered")]
+    public static void SetHallEntered()
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.hallOfSorrowEntered = true;
+        Debug.Log("[Зал Печали] Вход в зал отмечен.");
+    }
 }
