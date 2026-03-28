@@ -1,0 +1,17 @@
+﻿title: Variables
+---
+<<declare $truth = 0.0>>
+<<declare $control = 0.0>>
+<<declare $world = 0.0>>
+<<declare $guide_type = "">>
+<<declare $scene10_choice = 0>>
+<<declare $key_type = "">>
+<<declare $ending = 0>>
+<<declare $breakdown_type = 0>>
+<<declare $flask = "">>
+<<declare $memory_loss = false>>
+<<declare $closest_axis = "">>
+<<declare $golden_keys = 0>>
+<<declare $silver_keys = 0>>
+<<declare $both_keys_collected = false>>
+===
