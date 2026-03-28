@@ -44,6 +44,7 @@ namespace Core
         public bool fountainDone = false;
         public bool pondVisited = false; 
         public bool hallOfSorrowEntered = false;
+        public int scene10Choice = 0;
         
 
         // ─── Инициализация ─────────────────────────────────────

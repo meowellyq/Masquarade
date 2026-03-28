@@ -268,4 +268,20 @@ public class YarnCommands : MonoBehaviour
         GameStateManager.Instance.hallOfSorrowEntered = true;
         Debug.Log("[Зал Печали] Вход в зал отмечен.");
     }
+    
+
+    
+    // ─── Сохранить выбор сцены 10 ──────────────────────────
+// Yarn: set_scene10_choice 1 / 2 / 3
+    [YarnCommand("set_scene10_choice")]
+    public static void SetScene10Choice(int choice)
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.scene10Choice = choice;
+
+        var storage = GetStorage();
+        storage?.SetValue("$scene10_choice", choice);
+        Debug.Log($"[Scene10] Выбор сохранён: {choice}");
+    }
+
 }

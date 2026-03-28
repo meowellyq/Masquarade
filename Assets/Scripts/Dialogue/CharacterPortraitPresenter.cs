@@ -18,6 +18,7 @@ namespace Dialogue
         [SerializeField] private Sprite fontaineSprite;
         [SerializeField] private Sprite playfulnessSprite;
         [SerializeField] public Sprite extravaganceSprite;
+        [SerializeField] private Sprite inadequacySprite;  // ← ДОБАВИТЬ
 
         private void Awake()
         {
@@ -32,19 +33,19 @@ namespace Dialogue
                 portraitRight.gameObject.SetActive(false);
         }
 
-        // ─── Поиск спрайта по имени ────────────────────────────
         private Sprite GetSpriteByName(string characterName)
         {
             switch (characterName)
             {
-                case "xenobia":   return xenobiaSprite;
-                case "guide":     return guideSprite;
-                case "fontaine":  return fontaineSprite;
-                case "playfulness": return playfulnessSprite; 
+                case "xenobia":      return xenobiaSprite;
+                case "guide":        return guideSprite;
+                case "fontaine":     return fontaineSprite;
+                case "playfulness":  return playfulnessSprite;
                 case "extravagance": return extravaganceSprite;
+                case "inadequacy":   return inadequacySprite;  // ← ДОБАВИТЬ
                 default:
                     Debug.LogWarning($"Неизвестный персонаж: '{characterName}'. " +
-                                     "Доступные: xenobia, guide, fontaine, playfulness, extravagance.");
+                                     "Доступные: xenobia, guide, fontaine, playfulness, extravagance, inadequacy.");
                     return null;
             }
         }

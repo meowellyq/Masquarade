@@ -22,6 +22,7 @@ namespace Core
             if (!string.IsNullOrEmpty(debugStartNode))
             {
                 Debug.Log($"[SceneLoader] ТЕСТ: запускаем ноду '{debugStartNode}'");
+                RestoreVariables();
                 dialogueRunner?.StartDialogue(debugStartNode);
                 return;
             }
@@ -34,6 +35,8 @@ namespace Core
                 Debug.Log($"[SceneLoader] Автозапуск Yarn-ноды: {nodeToStart}");
 
                 GameStateManager.Instance.currentYarnNode = "";
+
+                RestoreVariables(); // ← восстанавливаем все переменные из GSM
 
                 if (dialogueRunner != null)
                     dialogueRunner.StartDialogue(nodeToStart);
@@ -50,6 +53,38 @@ namespace Core
                 else
                     Debug.LogError("[SceneLoader] DialogueRunner не назначен в Inspector!");
             }
+        }
+
+        // ─── Восстановление переменных из GSM в Yarn Storage ───
+        private void RestoreVariables()
+        {
+            if (GameStateManager.Instance == null) return;
+
+            var storage = FindObjectOfType<InMemoryVariableStorage>();
+            if (storage == null)
+            {
+                Debug.LogWarning("[SceneLoader] InMemoryVariableStorage не найден!");
+                return;
+            }
+
+            var gsm = GameStateManager.Instance;
+
+            // Оси
+            storage.SetValue("$control", gsm.control);
+            storage.SetValue("$world",   gsm.world);
+            storage.SetValue("$truth",   gsm.truth);
+
+            // Ключи
+            storage.SetValue("$golden_keys",         gsm.goldenKeys);
+            storage.SetValue("$silver_keys",         gsm.silverKeys);
+            storage.SetValue("$both_keys_collected", gsm.BothKeysCollected());
+
+            // Выборы сцен
+            storage.SetValue("$scene10_choice", (float)gsm.scene10Choice);
+
+            Debug.Log($"[SceneLoader] Переменные восстановлены: " +
+                      $"C={gsm.control} W={gsm.world} T={gsm.truth} | " +
+                      $"scene10_choice={gsm.scene10Choice}");
         }
 
         public static void LoadScene(string sceneName)
