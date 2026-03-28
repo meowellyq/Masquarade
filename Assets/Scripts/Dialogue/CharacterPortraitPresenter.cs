@@ -18,7 +18,8 @@ namespace Dialogue
         [SerializeField] private Sprite fontaineSprite;
         [SerializeField] private Sprite playfulnessSprite;
         [SerializeField] public Sprite extravaganceSprite;
-        [SerializeField] private Sprite inadequacySprite;  // ← ДОБАВИТЬ
+        [SerializeField] private Sprite inadequacySprite; 
+        [SerializeField] private Sprite guiltSprite;
 
         private void Awake()
         {
@@ -42,7 +43,8 @@ namespace Dialogue
                 case "fontaine":     return fontaineSprite;
                 case "playfulness":  return playfulnessSprite;
                 case "extravagance": return extravaganceSprite;
-                case "inadequacy":   return inadequacySprite;  // ← ДОБАВИТЬ
+                case "inadequacy":   return inadequacySprite;  
+                case "guilt": return guiltSprite;
                 default:
                     Debug.LogWarning($"Неизвестный персонаж: '{characterName}'. " +
                                      "Доступные: xenobia, guide, fontaine, playfulness, extravagance, inadequacy.");

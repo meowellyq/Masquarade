@@ -20,7 +20,7 @@ public class DebugOverlay : MonoBehaviour
         "Scene09_ReturnToFountain",
         "Scene10_HallOfSorrow",
         "Scene11_Inadequacy",
-        "Scene12_Start",
+        "Scene12_Guilt",
         "Scene14_Start",
         "Scene15_Start",
         "Scene16_Start",
