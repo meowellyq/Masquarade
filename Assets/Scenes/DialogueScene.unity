@@ -248,6 +248,8 @@ MonoBehaviour:
   fontaineSprite: {fileID: 21300000, guid: a800a9a2c85a0944cb242dab2d4a04c1, type: 3}
   playfulnessSprite: {fileID: 21300000, guid: f9ff7e30b36c5de499ab5a115f858b8e, type: 3}
   extravaganceSprite: {fileID: 21300000, guid: e8b714efcda77034c8962e1151915941, type: 3}
+  inadequacySprite: {fileID: 21300000, guid: a2cce82e5b45cbd4ca6386dc16d71665, type: 3}
+  guiltSprite: {fileID: 21300000, guid: 6100ad965699a754d86434110c248f52, type: 3}
 --- !u!114 &311200376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1210,6 +1212,8 @@ MonoBehaviour:
   fontaineSprite: {fileID: 21300000, guid: a800a9a2c85a0944cb242dab2d4a04c1, type: 3}
   playfulnessSprite: {fileID: 21300000, guid: f9ff7e30b36c5de499ab5a115f858b8e, type: 3}
   extravaganceSprite: {fileID: 21300000, guid: e8b714efcda77034c8962e1151915941, type: 3}
+  inadequacySprite: {fileID: 21300000, guid: a2cce82e5b45cbd4ca6386dc16d71665, type: 3}
+  guiltSprite: {fileID: 21300000, guid: 6100ad965699a754d86434110c248f52, type: 3}
 --- !u!1 &1429077775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1441,6 +1445,7 @@ MonoBehaviour:
   fountainDone: 0
   pondVisited: 0
   hallOfSorrowEntered: 0
+  scene10Choice: 0
 --- !u!4 &1875181534
 Transform:
   m_ObjectHideFlags: 0
