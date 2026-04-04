@@ -17,9 +17,14 @@ namespace Dialogue
         [SerializeField] private Sprite guideSprite;
         [SerializeField] private Sprite fontaineSprite;
         [SerializeField] private Sprite playfulnessSprite;
-        [SerializeField] public Sprite extravaganceSprite;
-        [SerializeField] private Sprite inadequacySprite; 
+        [SerializeField] public  Sprite extravaganceSprite;
+        [SerializeField] private Sprite inadequacySprite;
         [SerializeField] private Sprite guiltSprite;
+
+        [Header("Маски Зала Гнева")]
+        [SerializeField] private Sprite vulnerabilitySprite;
+        [SerializeField] private Sprite wrathSprite;
+        [SerializeField] private Sprite echoWrathSprite;
 
         private void Awake()
         {
@@ -38,16 +43,21 @@ namespace Dialogue
         {
             switch (characterName)
             {
-                case "xenobia":      return xenobiaSprite;
-                case "guide":        return guideSprite;
-                case "fontaine":     return fontaineSprite;
-                case "playfulness":  return playfulnessSprite;
-                case "extravagance": return extravaganceSprite;
-                case "inadequacy":   return inadequacySprite;  
-                case "guilt": return guiltSprite;
+                case "xenobia":        return xenobiaSprite;
+                case "guide":          return guideSprite;
+                case "fontaine":       return fontaineSprite;
+                case "playfulness":    return playfulnessSprite;
+                case "extravagance":   return extravaganceSprite;
+                case "inadequacy":     return inadequacySprite;
+                case "guilt":          return guiltSprite;
+                case "vulnerability":  return vulnerabilitySprite;
+                case "wrath":          return wrathSprite;
+                case "echo_wrath":     return echoWrathSprite;
                 default:
                     Debug.LogWarning($"Неизвестный персонаж: '{characterName}'. " +
-                                     "Доступные: xenobia, guide, fontaine, playfulness, extravagance, inadequacy.");
+                                     "Доступные: xenobia, guide, fontaine, playfulness, " +
+                                     "extravagance, inadequacy, guilt, " +
+                                     "vulnerability, wrath, echo_wrath.");
                     return null;
             }
         }
@@ -106,7 +116,6 @@ namespace Dialogue
                 Debug.LogWarning($"Спрайт для '{characterName}' не назначен в инспекторе!");
                 return;
             }
-
             portraitImage.sprite = sprite;
             portraitImage.gameObject.SetActive(true);
         }

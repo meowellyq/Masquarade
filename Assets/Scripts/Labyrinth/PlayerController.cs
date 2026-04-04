@@ -10,7 +10,7 @@ namespace Labyrinth
     {
         [Header("Movement")]
         [Tooltip("Скорость движения")]
-        public float moveSpeed = 5f;
+        public float moveSpeed = 15f;
 
         private Rigidbody2D _rb;
         private Vector2 _moveInput;

@@ -27,6 +27,7 @@
 // ═══════════════════════════════════════════════════════
 
 <<set_background bg_hall_of_wrath>>
+Маскарад продолжается.
 <<show_portrait_left xenobia>>
 
 Ксенобия: Жарко.
@@ -72,7 +73,7 @@ title: Scene15_Guide_Entrance
 // ───────────────────────────────────────────────────────
 title: Scene15_Vulnerability
 ---
-<<show_portrait_right mask_vulnerability>>
+<<show_portrait_right vulnerability>>
 
 Ксенобия: Что-то движется.
 Ксенобия: Медленно. По кругу.
@@ -116,7 +117,7 @@ title: Scene15_Vulnerability
 -> Держаться изо всех сил. (Молча терпеть)
     Ксенобия: Я не отвечаю.
     Ксенобия: Стою.
-    Ксенобия: К глазам что-то по��ступает — я не даю этому выйти.
+    Ксенобия: К глазам что-то подступает — я не даю этому выйти.
     Ксенобия: *про себя* Не здесь. Только не здесь.
     <<shift_axis world -10>>
     <<shift_axis control 5>>
@@ -127,7 +128,7 @@ title: Scene15_Vulnerability
     Ксенобия: К чертям собачьим катитесь!
     Уязвимость: *отшатывается*
     Ксенобия: *удивлённо*
-    Ксенобия: Я не знала что это так... хорошо.
+    Ксенобия: Я не знала что это ��ак... хорошо.
     <<shift_axis world 10>>
     <<shift_axis control 5>>
     <<jump Scene15_Vulnerability_End>>
@@ -153,7 +154,7 @@ title: Scene15_Vulnerability_End
 // ───────────────────────────────────────────────────────
 title: Scene15_Wrath_Arrival
 ---
-<<show_portrait_right mask_wrath>>
+<<show_portrait_right wrath>>
 
 Ксенобия: Вот оно.
 Ксенобия: Маска другая. Без притворной мягкости.
@@ -253,6 +254,7 @@ title: Scene15_End
 Ксенобия: Воздух там другой. Холоднее.
 
 <<hide_all_portraits>>
+<<set_spawn after_wrath>>
 <<set_yarn_node Scene16_Echo>>
-<<load_scene DialogueScene>>
+<<load_scene LabyrinthScene>>
 ===

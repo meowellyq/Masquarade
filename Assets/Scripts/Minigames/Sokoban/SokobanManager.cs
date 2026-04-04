@@ -98,20 +98,29 @@ namespace Minigames.Sokoban
             }
 
             if (filled < totalSlots) return;
+            FinishGame(skeletonCount > (filled - skeletonCount));
+        }
 
-            _isComplete = true;
-            int mannequinCount = filled - skeletonCount;
-            _isGoldenKey = skeletonCount > mannequinCount;
+        // ─── Единая точка завершения ────────────────────────────
+        void FinishGame(bool golden)
+        {
+            if (_isComplete) return; // защита от двойного вызова
+            _isComplete  = true;
+            _isGoldenKey = golden;
 
-            Debug.Log($"[Sokoban] Завершено! Скелетов: {skeletonCount}, Манекенов: {mannequinCount}. " +
-                      $"Ключ: {(_isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
+            Debug.Log($"[Sokoban] Завершено! Ключ: {(_isGoldenKey ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
 
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.CompleteMiniGame("inadequacy", _isGoldenKey);
 
+            // Скрываем панель на случай если она уже открыта, потом показываем чисто
             if (completionPanel != null)
+            {
+                completionPanel.SetActive(false);
                 completionPanel.SetActive(true);
+            }
 
+            CancelInvoke(nameof(ReturnToLabyrinth)); // отменяем предыдущий invoke если был
             Invoke(nameof(ReturnToLabyrinth), 2f);
         }
 
@@ -131,15 +140,8 @@ namespace Minigames.Sokoban
 #if UNITY_EDITOR
         void DebugForceComplete(bool golden)
         {
-            if (_isComplete) return;
-            _isComplete  = true;
-            _isGoldenKey = golden;
             Debug.Log($"[DEBUG] Форсирую завершение Sokoban. Ключ: {(golden ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
-            if (GameStateManager.Instance != null)
-                GameStateManager.Instance.CompleteMiniGame("inadequacy", golden);
-            if (completionPanel != null)
-                completionPanel.SetActive(true);
-            Invoke(nameof(ReturnToLabyrinth), 2f);
+            FinishGame(golden); // теперь через единую точку — дублей не будет
         }
 #endif
     }

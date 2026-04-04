@@ -283,5 +283,16 @@ public class YarnCommands : MonoBehaviour
         storage?.SetValue("$scene10_choice", choice);
         Debug.Log($"[Scene10] Выбор сохранён: {choice}");
     }
+    
+    // ─── Установить точку спавна в лабиринте ───────────────
+    // Yarn: set_spawn after_wrath
+    // Допустимые значения: "default" | "after_wrath" | "after_echo"
+    [YarnCommand("set_spawn")]
+    public static void SetSpawn(string spawnId)
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.spawnPointId = spawnId;
+        Debug.Log($"[Спавн] Точка спавна установлена: {spawnId}");
+    }
 
 }

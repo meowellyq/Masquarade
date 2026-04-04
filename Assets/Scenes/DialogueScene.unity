@@ -1346,11 +1346,15 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9cd8d4bfdb007b844b9cff8d8f3b22e8, type: 3}
   - {fileID: 21300000, guid: 11e4889d1c2e716429d7c3fd5af7c279, type: 3}
   - {fileID: 21300000, guid: 8d814806beee83347bf6b69db8ab0991, type: 3}
+  - {fileID: 21300000, guid: 3d4542b619c2ec949adcfba33a99a2aa, type: 3}
+  - {fileID: 21300000, guid: 32c88e000d299eb4abccfad440f7c5d6, type: 3}
   backgroundNames:
   - bg_gates
   - bg_garden_fountain
   - bg_hall_joy
   - bg_hall_of_sorrow
+  - bg_hall_of_wrath
+  - bg_corridor_red
 --- !u!114 &1560843556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1441,6 +1445,8 @@ MonoBehaviour:
   hasInadequacyKey: 0
   currentYarnNode: Scene01_Start
   labyrinthVisualEffectApplied: 0
+  spawnPointId: default
+  labyrinthReturnPosition: {x: 0, y: 0, z: 0}
   memoryLoss: 0
   fountainDone: 0
   pondVisited: 0

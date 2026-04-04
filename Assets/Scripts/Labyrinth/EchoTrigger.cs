@@ -29,6 +29,7 @@ namespace Labyrinth
         public Button cancelButton;
 
         private bool _isCompleted = false;
+        private Vector3 _playerPositionOnEnter; // ← позиция при входе в триггер
 
         void Start()
         {
@@ -45,13 +46,17 @@ namespace Labyrinth
                 }
             }
 
-            // Только скрываем панель — без подписок
             HidePanel();
         }
 
         void OnTriggerEnter2D(Collider2D other)
         {
             if (_isCompleted || !other.CompareTag("Player")) return;
+
+            // Сохраняем позицию игрока в момент входа в зону триггера
+            _playerPositionOnEnter = other.transform.position;
+            Debug.Log($"[EchoTrigger] Позиция входа сохранена: {_playerPositionOnEnter}");
+
             ShowPanel();
         }
 
@@ -73,8 +78,6 @@ namespace Labyrinth
                 confirmationText.text = $"Перед вами {echoName}.\nВы готовы войти?";
             }
 
-            // Подписываемся только когда панель показывается
-            // RemoveAllListeners гарантирует что второй триггер не накопится
             if (confirmButton != null)
             {
                 confirmButton.onClick.RemoveAllListeners();
@@ -94,7 +97,6 @@ namespace Labyrinth
         {
             if (confirmationPanel != null)
             {
-                // Отписываемся когда панель скрывается
                 if (confirmButton != null)
                     confirmButton.onClick.RemoveAllListeners();
                 if (cancelButton != null)
@@ -109,12 +111,19 @@ namespace Labyrinth
         {
             Time.timeScale = 1f;
 
-            if (GameStateManager.Instance != null &&
-                !string.IsNullOrEmpty(introYarnNode))
+            if (GameStateManager.Instance != null)
             {
-                GameStateManager.Instance.currentYarnNode = introYarnNode;
-                Debug.Log($"[EchoTrigger] Переход в DialogueScene, нода: {introYarnNode}");
-                SceneManager.LoadScene("DialogueScene");
+                // Сохраняем позицию возврата перед уходом в мини-игру
+                GameStateManager.Instance.labyrinthReturnPosition = _playerPositionOnEnter;
+                GameStateManager.Instance.spawnPointId = "return_position";
+                Debug.Log($"[EchoTrigger] Возврат будет в позицию: {_playerPositionOnEnter}");
+
+                if (!string.IsNullOrEmpty(introYarnNode))
+                {
+                    GameStateManager.Instance.currentYarnNode = introYarnNode;
+                    Debug.Log($"[EchoTrigger] Переход в DialogueScene, нода: {introYarnNode}");
+                    SceneManager.LoadScene("DialogueScene");
+                }
             }
             else
             {

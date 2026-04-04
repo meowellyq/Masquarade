@@ -36,14 +36,19 @@ namespace Labyrinth
                 return;
             }
 
-            // Фонтан ещё не пройден — подсказка
+            // Фонтан ещё не пройден — подс��азка
             if (!gsm.fountainDone)
             {
                 ShowHint("Здесь тихо. Но пока тебе нечего здесь искать.");
                 return;
             }
 
-            // Всё готово — запускаем сцену
+            // Сохраняем позицию игрока перед уходом на сцену пруда
+            gsm.labyrinthReturnPosition = other.transform.position;
+            gsm.spawnPointId = "return_position";
+            Debug.Log($"[PondTrigger] Позиция возврата сохранена: {other.transform.position}");
+
+            // Запускаем сцену
             _isTriggering = true;
             Debug.Log("[PondTrigger] Запускаем Scene08_5_Pond.");
             gsm.currentYarnNode = "Scene08_5_Pond";
