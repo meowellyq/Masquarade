@@ -22,10 +22,11 @@ public class DebugOverlay : MonoBehaviour
         "Scene11_Inadequacy",
         "Scene12_Guilt",
         "Scene13_Guide",
-        "Scene15_Start",
-        "Scene16_Start",
-        "Scene17_Start",
-        "Scene18_5_Start",
+        "Scene15_Wrath",
+        "Scene16_Echo",
+        "Scene17_Inadequacy",
+        "Scene18_GazeboReturn",
+        "Scene18_5_Gazebo",
         "Scene19_Start",
         "Scene20_Start"
     };
@@ -53,7 +54,7 @@ public class DebugOverlay : MonoBehaviour
         GUI.skin.label.fontSize = 14;
 
         float panelWidth = 320f;
-        float panelHeight = 580f;
+        float panelHeight = 680f;
         float x = Screen.width - panelWidth - 10f;
         float y = 10f;
 
@@ -70,34 +71,38 @@ public class DebugOverlay : MonoBehaviour
         string wColor = gsm.world > 0 ? "lime" : gsm.world < 0 ? "red" : "white";
         string tColor = gsm.truth > 0 ? "lime" : gsm.truth < 0 ? "red" : "white";
 
-        var richLabel = new GUIStyle(GUI.skin.label) { richText = true, fontSize = 15 };
+        var richLabel = new GUIStyle(GUI.skin.label) { richText = true, fontSize = 13 };
 
-        GUILayout.Label($"<b>Control:</b> <color={cColor}>{gsm.control}</color>  " +
-                        "(Zavis./Avton.)", richLabel);
-        GUILayout.Label($"<b>World:</b>   <color={wColor}>{gsm.world}</color>  " +
-                        "(Prinyat./Sopr.)", richLabel);
-        GUILayout.Label($"<b>Truth:</b>   <color={tColor}>{gsm.truth}</color>  " +
-                        "(Samoob./Chestn.)", richLabel);
+        GUILayout.Label($"<b>Control:</b> <color={cColor}>{gsm.control}</color>  (Zavis./Avton.)", richLabel);
+        GUILayout.Label($"<b>World:</b>   <color={wColor}>{gsm.world}</color>  (Prinyat./Sopr.)", richLabel);
+        GUILayout.Label($"<b>Truth:</b>   <color={tColor}>{gsm.truth}</color>  (Samoob./Chestn.)", richLabel);
 
         GUILayout.Space(3);
 
         int ending = gsm.DetermineEnding();
-        GUILayout.Label($"<b>Ending: <color=cyan>{ending}</color></b>  " +
-                        $"Keys: G:{gsm.goldenKeys} S:{gsm.silverKeys}", richLabel);
+        GUILayout.Label($"<b>Ending: <color=cyan>{ending}</color></b>  Keys: G:{gsm.goldenKeys} S:{gsm.silverKeys}", richLabel);
 
         // ─── Флаги ──────────────────────────────────────────
-        string pondColor    = gsm.pondVisited    ? "lime" : "red";
-        string fountainColor = gsm.fountainDone  ? "lime" : "red";
-        string extravColor  = gsm.hasExtravaganceKey ? "lime" : "red";
-        string inadequColor = gsm.hasInadequacyKey   ? "lime" : "red";
+        string pondColor     = gsm.pondVisited         ? "lime" : "red";
+        string fountainColor = gsm.fountainDone        ? "lime" : "red";
+        string extravColor   = gsm.hasExtravaganceKey  ? "lime" : "red";
+        string inadequColor  = gsm.hasInadequacyKey    ? "lime" : "red";
+        string hallColor     = gsm.hallOfSorrowEntered ? "lime" : "red";
+        string wrathColor    = gsm.wrathEchoDone       ? "lime" : "red";
+
         GUILayout.Label(
             $"Pond:<color={pondColor}>{gsm.pondVisited}</color>  " +
             $"Fountain:<color={fountainColor}>{gsm.fountainDone}</color>  " +
             $"Extr:<color={extravColor}>{gsm.hasExtravaganceKey}</color>  " +
             $"Inad:<color={inadequColor}>{gsm.hasInadequacyKey}</color>",
             richLabel);
+        GUILayout.Label(
+            $"Hall:<color={hallColor}>{gsm.hallOfSorrowEntered}</color>  " +
+            $"WrathEcho:<color={wrathColor}>{gsm.wrathEchoDone}</color>  " +
+            $"Flask:<color=cyan>{gsm.flask}</color>",
+            richLabel);
 
-        GUILayout.Space(8);
+        GUILayout.Space(6);
 
         // ─── Кнопки осей ────────────────────────────────────
         GUILayout.Label("<b>Shift axes:</b>", richLabel);
@@ -120,16 +125,16 @@ public class DebugOverlay : MonoBehaviour
         if (GUILayout.Button("T = 0")) gsm.truth = 0;
         GUILayout.EndHorizontal();
 
-        GUILayout.Space(8);
+        GUILayout.Space(6);
 
         // ─── Ключи ──────────────────────────────────────────
         GUILayout.Label("<b>Keys:</b>", richLabel);
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("G +1"))  { gsm.goldenKeys++; gsm.hasExtravaganceKey = true; }
-        if (GUILayout.Button("G -1"))  { gsm.goldenKeys = Mathf.Max(0, gsm.goldenKeys - 1); }
-        if (GUILayout.Button("S +1"))  { gsm.silverKeys++; gsm.hasInadequacyKey = true; }
-        if (GUILayout.Button("S -1"))  { gsm.silverKeys = Mathf.Max(0, gsm.silverKeys - 1); }
+        if (GUILayout.Button("G +1")) { gsm.goldenKeys++; gsm.hasExtravaganceKey = true; }
+        if (GUILayout.Button("G -1")) { gsm.goldenKeys = Mathf.Max(0, gsm.goldenKeys - 1); }
+        if (GUILayout.Button("S +1")) { gsm.silverKeys++; gsm.hasInadequacyKey = true; }
+        if (GUILayout.Button("S -1")) { gsm.silverKeys = Mathf.Max(0, gsm.silverKeys - 1); }
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
@@ -145,24 +150,41 @@ public class DebugOverlay : MonoBehaviour
         }
         GUILayout.EndHorizontal();
 
-        GUILayout.Space(8);
+        GUILayout.Space(6);
+
+        // ─── Быстрые флаги ──────────────────────────────────
+        GUILayout.Label("<b>Quick flags:</b>", richLabel);
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Hall ON"))    gsm.hallOfSorrowEntered = true;
+        if (GUILayout.Button("Hall OFF"))   gsm.hallOfSorrowEntered = false;
+        if (GUILayout.Button("Wrath ON"))   gsm.wrathEchoDone = true;
+        if (GUILayout.Button("Wrath OFF"))  gsm.wrathEchoDone = false;
+        GUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Flask=empty"))  gsm.flask = "empty";
+        if (GUILayout.Button("Flask=black"))  gsm.flask = "black";
+        if (GUILayout.Button("Flask=pink"))   gsm.flask = "pink";
+        if (GUILayout.Button("Flask=grey"))   gsm.flask = "grey";
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(6);
 
         // ─── Сцены ──────────────────────────────────────────
         GUILayout.Label("<b>Load scene:</b>", richLabel);
 
         GUILayout.BeginHorizontal();
-        if (GUILayout.Button("DialogueScene"))
-            SceneManager.LoadScene("DialogueScene");
-        if (GUILayout.Button("LabyrinthScene"))
-            SceneManager.LoadScene("LabyrinthScene");
+        if (GUILayout.Button("DialogueScene"))  SceneManager.LoadScene("DialogueScene");
+        if (GUILayout.Button("LabyrinthScene")) SceneManager.LoadScene("LabyrinthScene");
         GUILayout.EndHorizontal();
 
-        GUILayout.Space(5);
+        GUILayout.Space(4);
 
         // ─── Переход к Yarn-нодам ───────────────────────────
         GUILayout.Label("<b>Jump to node:</b>", richLabel);
 
-        _scrollPos = GUILayout.BeginScrollView(_scrollPos, GUILayout.Height(130));
+        _scrollPos = GUILayout.BeginScrollView(_scrollPos, GUILayout.Height(150));
 
         for (int i = 0; i < _sceneNodes.Length; i += 3)
         {
@@ -170,10 +192,18 @@ public class DebugOverlay : MonoBehaviour
             for (int j = i; j < Mathf.Min(i + 3, _sceneNodes.Length); j++)
             {
                 string nodeName = _sceneNodes[j];
-                string shortName = nodeName.Replace("Scene", "Sc.")
-                                           .Replace("_Start", "")
-                                           .Replace("ReturnToFountain", "Fountain")
-                                           .Replace("_5", ".5");
+                string shortName = nodeName
+                    .Replace("Scene", "Sc.")
+                    .Replace("_Start", "")
+                    .Replace("_Wrath", "")
+                    .Replace("_Echo", "")
+                    .Replace("ReturnToFountain", "Fountain")
+                    .Replace("_Inadequacy", "_Inad")
+                    .Replace("_Guilt", "_Guilt")
+                    .Replace("_Guide", "_Guide")
+                    .Replace("GazeboReturn", "Gaz.Ret")
+                    .Replace("_Gazebo", "_Gaz")
+                    .Replace("HallOfSorrow", "HallOf");
 
                 if (GUILayout.Button(shortName, GUILayout.Width(85)))
                     JumpToNode(nodeName);
@@ -183,7 +213,7 @@ public class DebugOverlay : MonoBehaviour
 
         GUILayout.EndScrollView();
 
-        GUILayout.Space(5);
+        GUILayout.Space(4);
 
         // ─── Сброс ──────────────────────────────────────────
         GUILayout.BeginHorizontal();
@@ -193,6 +223,8 @@ public class DebugOverlay : MonoBehaviour
             gsm.goldenKeys = 0; gsm.silverKeys = 0;
             gsm.hasExtravaganceKey = false; gsm.hasInadequacyKey = false;
             gsm.fountainDone = false; gsm.pondVisited = false;
+            gsm.hallOfSorrowEntered = false; gsm.wrathEchoDone = false;
+            gsm.flask = "";
             Debug.Log("[Debug] Полный сброс состояния");
         }
         if (GUILayout.Button("Log state"))
@@ -207,7 +239,6 @@ public class DebugOverlay : MonoBehaviour
         var runner = FindObjectOfType<Yarn.Unity.DialogueRunner>();
         if (runner == null)
         {
-            // Если мы не в DialogueScene — загружаем её и передаём ноду
             GameStateManager.Instance.currentYarnNode = nodeName;
             SceneManager.LoadScene("DialogueScene");
             return;
