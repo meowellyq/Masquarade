@@ -9,14 +9,16 @@ namespace Labyrinth
     public class EchoTrigger : MonoBehaviour
     {
         [Header("Config")]
-        [Tooltip("Тип Эха: extravagance или inadequacy")]
+        [Tooltip("Тип Эха: extravagance, inadequacy, wrath")]
         public string echoType = "extravagance";
 
-        [Tooltip("Имя Unity-сцены мини-игры (используется только как запасной вариант)")]
+        [Tooltip("Имя Unity-сцены мини-игры (запасной вариант)")]
         public string miniGameSceneName = "Minigame_Mirror";
 
+        [Tooltip("Если true — запускает диалог сразу без панели подтверждения")]
+        public bool skipConfirmation = false;
+
         [Header("Yarn нода — вступление")]
-        [Tooltip("Нода которая запустится перед мини-игрой. Пример: Echo_Extravagance_Intro")]
         public string introYarnNode = "Echo_Extravagance_Intro";
 
         [Header("Visual (опционально)")]
@@ -29,15 +31,31 @@ namespace Labyrinth
         public Button cancelButton;
 
         private bool _isCompleted = false;
-        private Vector3 _playerPositionOnEnter; // ← позиция при входе в триггер
+        private bool _isTriggering = false; // ← защита от повторного срабатывания
+        private Vector3 _playerPositionOnEnter;
 
         void Start()
         {
             if (GameStateManager.Instance != null)
             {
-                _isCompleted = echoType == "extravagance"
-                    ? GameStateManager.Instance.hasExtravaganceKey
-                    : GameStateManager.Instance.hasInadequacyKey;
+                var gsm = GameStateManager.Instance;
+
+                // Эхо Ярости недоступно пока Зал Печали не посещён
+                if (echoType == "wrath" && !gsm.hallOfSorrowEntered)
+                {
+                    Debug.Log("[EchoTrigger] Эхо Ярости заблокировано — Зал Печали ещё не посещён.");
+                    gameObject.SetActive(false);
+                    return;
+                }
+
+                // Проверяем завершённость по типу
+                _isCompleted = echoType switch
+                {
+                    "extravagance" => gsm.hasExtravaganceKey,
+                    "inadequacy"   => gsm.hasInadequacyKey,
+                    "wrath"        => gsm.wrathEchoDone,
+                    _              => false
+                };
 
                 if (_isCompleted)
                 {
@@ -51,19 +69,29 @@ namespace Labyrinth
 
         void OnTriggerEnter2D(Collider2D other)
         {
-            if (_isCompleted || !other.CompareTag("Player")) return;
+            if (_isCompleted || _isTriggering || !other.CompareTag("Player")) return;
 
-            // Сохраняем позицию игрока в момент входа в зону триггера
             _playerPositionOnEnter = other.transform.position;
             Debug.Log($"[EchoTrigger] Позиция входа сохранена: {_playerPositionOnEnter}");
 
-            ShowPanel();
+            if (skipConfirmation)
+            {
+                _isTriggering = true;
+                OnConfirm();
+            }
+            else
+            {
+                ShowPanel();
+            }
         }
 
         void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
+            {
+                _isTriggering = false;
                 HidePanel();
+            }
         }
 
         void ShowPanel()
@@ -72,9 +100,13 @@ namespace Labyrinth
 
             if (confirmationText != null)
             {
-                string echoName = echoType == "extravagance"
-                    ? "Эхо Экстравагантности"
-                    : "Эхо Неполноценности";
+                string echoName = echoType switch
+                {
+                    "extravagance" => "Эхо Экстравагантности",
+                    "inadequacy"   => "Эхо Неполноценности",
+                    "wrath"        => "Эхо Ярости",
+                    _              => "Эхо"
+                };
                 confirmationText.text = $"Перед вами {echoName}.\nВы готовы войти?";
             }
 
@@ -110,13 +142,12 @@ namespace Labyrinth
         void OnConfirm()
         {
             Time.timeScale = 1f;
+            _isCompleted = true; // ← сразу блокируем повторный вход
 
             if (GameStateManager.Instance != null)
             {
-                // Сохраняем позицию возврата перед уходом в мини-игру
                 GameStateManager.Instance.labyrinthReturnPosition = _playerPositionOnEnter;
                 GameStateManager.Instance.spawnPointId = "return_position";
-                Debug.Log($"[EchoTrigger] Возврат будет в позицию: {_playerPositionOnEnter}");
 
                 if (!string.IsNullOrEmpty(introYarnNode))
                 {
@@ -127,13 +158,14 @@ namespace Labyrinth
             }
             else
             {
-                Debug.LogWarning("[EchoTrigger] GameStateManager не найден, прямой переход.");
+                Debug.LogWarning("[EchoTrigger] GameStateManager не найден.");
                 SceneManager.LoadScene(miniGameSceneName);
             }
         }
 
         void OnCancel()
         {
+            _isTriggering = false;
             Debug.Log($"[EchoTrigger] Отменено игроком.");
             HidePanel();
         }

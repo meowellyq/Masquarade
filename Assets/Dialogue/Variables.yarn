@@ -8,10 +8,10 @@
 <<declare $key_type = "">>
 <<declare $ending = 0>>
 <<declare $breakdown_type = 0>>
-<<declare $flask = "">>
 <<declare $memory_loss = false>>
 <<declare $closest_axis = "">>
 <<declare $golden_keys = 0>>
 <<declare $silver_keys = 0>>
 <<declare $both_keys_collected = false>>
+<<declare $flask = "" as string>>
 ===

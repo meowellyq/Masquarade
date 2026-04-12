@@ -47,6 +47,8 @@ namespace Core
         public bool pondVisited = false;
         public bool hallOfSorrowEntered = false;
         public int scene10Choice = 0;
+        public bool wrathEchoDone = false;
+        public string flask = "";  // ← НОВАЯ СТРОКА: "", "empty", "black", "pink", "grey"
 
         // ─── Инициализация ─────────────────────────────────────
         private void Awake()

@@ -294,5 +294,24 @@ public class YarnCommands : MonoBehaviour
         GameStateManager.Instance.spawnPointId = spawnId;
         Debug.Log($"[Спавн] Точка спавна установлена: {spawnId}");
     }
+    
+    // ─── Отметить что Эхо Ярости пройдено ──────────────────
+    // Yarn: set_wrath_echo_done
+    [YarnCommand("set_wrath_echo_done")]
+    public static void SetWrathEchoDone()
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.wrathEchoDone = true;
+        Debug.Log("[Эхо Ярости] Диалог завершён, триггер будет скрыт.");
+    }
+    
+    // Yarn: set_flask black / pink / grey
+    [YarnCommand("set_flask")]
+    public static void SetFlask(string value)
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.flask = value;
+        Debug.Log($"[Flask] Флакон заполнен: {value}");
+    }
 
 }

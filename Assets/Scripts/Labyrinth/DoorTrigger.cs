@@ -27,13 +27,24 @@ namespace Labyrinth
             if (GameStateManager.Instance == null) return;
             if (_isTriggering) return;
 
-            Debug.Log($"[DoorTrigger] Вошёл: {other.name}, Tag: {other.tag}");
+            var gsm = GameStateManager.Instance;
 
-            if (GameStateManager.Instance.pondVisited)
+            if (gsm.pondVisited)
             {
                 _isTriggering = true;
-                Debug.Log("[DoorTrigger] Дверь открыта. Запускаем Yarn-ноду.");
-                GameStateManager.Instance.currentYarnNode = entryYarnNode;
+
+                // Если флакон получен — запускаем Scene17 вместо Scene10
+                if (gsm.wrathEchoDone && !string.IsNullOrEmpty(gsm.flask))
+                {
+                    Debug.Log("[DoorTrigger] Флакон есть — переход в Scene17.");
+                    gsm.currentYarnNode = "Scene17_Inadequacy";
+                }
+                else
+                {
+                    Debug.Log("[DoorTrigger] Обычный вход — запускаем " + entryYarnNode);
+                    gsm.currentYarnNode = entryYarnNode;
+                }
+
                 SceneManager.LoadScene("DialogueScene");
             }
             else
