@@ -60,8 +60,8 @@ namespace Minigames.PowderPuzzle
                 OnExitButton();
 
 #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.F1)) DebugForceComplete(true);
-            if (Input.GetKeyDown(KeyCode.F2)) DebugForceComplete(false);
+            if (Input.GetKeyDown(KeyCode.F7)) DebugForceComplete(true);  // было F1
+            if (Input.GetKeyDown(KeyCode.F8)) DebugForceComplete(false); // было F2
 #endif
         }
 
