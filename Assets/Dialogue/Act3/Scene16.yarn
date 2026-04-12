@@ -167,8 +167,8 @@ title: Scene16_End
 Эхо Ярости: Я подожду.
 Эхо Ярости: Я умею ждать.
 
-
 <<hide_all_portraits>>
+<<set_wrath_echo_done>>
 <<set_spawn after_wrath>>
 <<set_yarn_node Scene17_Inadequacy>>
 <<load_scene LabyrinthScene>>

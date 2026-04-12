@@ -157,12 +157,21 @@ public class YarnCommands : MonoBehaviour
     }
 
     // ─── Загрузка Unity-сцены ──────────────────────────────
-    // Yarn: load_scene LabyrinthScene
     [YarnCommand("load_scene")]
     public static void LoadScene(string sceneName)
     {
         if (GameStateManager.Instance != null)
+        {
             GameStateManager.Instance.SyncAxesFromYarn();
+
+            // Синхронизируем flask из Yarn → GSM
+            var storage = GetStorage();
+            if (storage != null && storage.TryGetValue("$flask", out string flaskVal))
+            {
+                GameStateManager.Instance.flask = flaskVal;
+                Debug.Log($"[Flask Sync] flask = '{flaskVal}'");
+            }
+        }
 
         Debug.Log($"[Сцена] Загрузка: {sceneName}");
         SceneManager.LoadScene(sceneName);
