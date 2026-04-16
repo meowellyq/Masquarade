@@ -333,5 +333,14 @@ public class YarnCommands : MonoBehaviour
         if (GameStateManager.Instance == null) return;
         GameStateManager.Instance.gazeboReturnDone = true;
     }
+    
+    [YarnCommand("show_flask")]
+    public static void ShowFlask(string flaskType)
+    {
+        var controller = Object.FindObjectOfType<FlaskDisplayController>();
+        if (controller == null) { Debug.LogWarning("[Flask] FlaskDisplayController не найден"); return; }
+        controller.Show(flaskType);
+        Debug.Log($"[Flask] Показываем флакон: {flaskType}");
+    }
 
 }

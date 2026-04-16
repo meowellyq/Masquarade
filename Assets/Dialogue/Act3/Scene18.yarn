@@ -189,9 +189,8 @@ title: Scene18_End
 Ксенобия: Почти живая.
 
 <<hide_all_portraits>>
-<<set_wrath_echo_done>>
+<<set_gazebo_return_done>>
 <<set_spawn after_echo>>
 <<set_yarn_node Scene18_5_Gazebo>>
-<<set_gazebo_return_done>>
-<<load_scene LabyrinthScene>>
+<<load_scene DialogueScene>>
 ===
