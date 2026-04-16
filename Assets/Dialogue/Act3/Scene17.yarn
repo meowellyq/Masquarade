@@ -106,6 +106,7 @@ title: Scene17_Cold
 <<endif>>
 
 <<set_flask black>>
+<<show_flask black>>
 <<jump Scene17_End>>
 ===
 
@@ -147,6 +148,7 @@ title: Scene17_Sweet
 Ксенобия: *про себя* Фальшивое.
 
 <<set_flask pink>>
+<<show_flask pink>>
 <<jump Scene17_End>>
 ===
 
@@ -185,6 +187,7 @@ title: Scene17_Pragmatic
 <<endif>>
 
 <<set_flask grey>>
+<<show_flask grey>>
 <<jump Scene17_End>>
 ===
 
