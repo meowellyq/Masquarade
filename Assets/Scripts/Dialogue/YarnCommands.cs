@@ -314,12 +314,16 @@ public class YarnCommands : MonoBehaviour
         Debug.Log("[Эхо Ярости] Диалог завершён, триггер будет скрыт.");
     }
     
-    // Yarn: set_flask black / pink / grey
     [YarnCommand("set_flask")]
     public static void SetFlask(string value)
     {
         if (GameStateManager.Instance == null) return;
         GameStateManager.Instance.flask = value;
+
+        // Синхронизируем и в Yarn Storage чтобы load_scene не перезаписал
+        var storage = GetStorage();
+        storage?.SetValue("$flask", value);
+
         Debug.Log($"[Flask] Флакон заполнен: {value}");
     }
     
