@@ -40,20 +40,40 @@ namespace Labyrinth
             {
                 var gsm = GameStateManager.Instance;
 
-                // Эхо Ярости недоступно пока Зал Печали не посещён
-                if (echoType == "wrath" && !gsm.hallOfSorrowEntered)
+                if (echoType == "wrath")
                 {
-                    Debug.Log("[EchoTrigger] Эхо Ярости заблокировано — Зал Печали ещё не посещён.");
-                    gameObject.SetActive(false);
-                    return;
+                    // Второй визит — флакон заполнен, ещё не отдан
+                    if (gsm.wrathEchoDone
+                        && !string.IsNullOrEmpty(gsm.flask)
+                        && gsm.flask != "empty"
+                        && !gsm.gazeboReturnDone)
+                    {
+                        Debug.Log("[EchoTrigger] Эхо Ярости: режим возврата флакона.");
+                        introYarnNode = "Scene18_GazeboReturn";
+                        return; // оставляем объект активным
+                    }
+
+                    // Первый визит — зал ещё не посещён
+                    if (!gsm.hallOfSorrowEntered)
+                    {
+                        Debug.Log("[EchoTrigger] Эхо Ярости заблокировано — Зал Печали не посещён.");
+                        gameObject.SetActive(false);
+                        return;
+                    }
+
+                    // После завершения обоих визитов — скрыть
+                    if (gsm.gazeboReturnDone)
+                    {
+                        gameObject.SetActive(false);
+                        return;
+                    }
                 }
 
-                // Проверяем завершённость по типу
                 _isCompleted = echoType switch
                 {
                     "extravagance" => gsm.hasExtravaganceKey,
                     "inadequacy"   => gsm.hasInadequacyKey,
-                    "wrath"        => gsm.wrathEchoDone,
+                    "wrath"        => gsm.wrathEchoDone && (gsm.gazeboReturnDone || string.IsNullOrEmpty(gsm.flask) || gsm.flask == "empty"),
                     _              => false
                 };
 
