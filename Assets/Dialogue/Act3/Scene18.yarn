@@ -192,5 +192,6 @@ title: Scene18_End
 <<set_wrath_echo_done>>
 <<set_spawn after_echo>>
 <<set_yarn_node Scene18_5_Gazebo>>
+<<set_gazebo_return_done>>
 <<load_scene LabyrinthScene>>
 ===

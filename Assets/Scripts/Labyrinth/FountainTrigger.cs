@@ -33,7 +33,8 @@ namespace Labyrinth
             // Фонтан уже пройден — короткое напоминание куда идти
             if (gsm.fountainDone)
             {
-                ShowHint("Иди к пруду в правом углу лабиринта.");
+                if (!gsm.pondVisited)
+                    ShowHint("Иди к пруду в правом углу лабиринта.");
                 return;
             }
 

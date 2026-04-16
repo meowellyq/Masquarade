@@ -322,5 +322,12 @@ public class YarnCommands : MonoBehaviour
         GameStateManager.Instance.flask = value;
         Debug.Log($"[Flask] Флакон заполнен: {value}");
     }
+    
+    [YarnCommand("set_gazebo_return_done")]
+    public static void SetGazeboReturnDone()
+    {
+        if (GameStateManager.Instance == null) return;
+        GameStateManager.Instance.gazeboReturnDone = true;
+    }
 
 }
