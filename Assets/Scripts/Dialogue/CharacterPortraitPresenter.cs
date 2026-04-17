@@ -20,6 +20,7 @@ namespace Dialogue
         [SerializeField] public  Sprite extravaganceSprite;
         [SerializeField] private Sprite inadequacySprite;
         [SerializeField] private Sprite guiltSprite;
+        [SerializeField] private Sprite xenosSprite;
 
         [Header("Маски Зала Гнева")]
         [SerializeField] private Sprite vulnerabilitySprite;
@@ -53,11 +54,12 @@ namespace Dialogue
                 case "vulnerability":  return vulnerabilitySprite;
                 case "wrath":          return wrathSprite;
                 case "echo_wrath":     return echoWrathSprite;
+                case "xenos": return xenosSprite;
                 default:
                     Debug.LogWarning($"Неизвестный персонаж: '{characterName}'. " +
                                      "Доступные: xenobia, guide, fontaine, playfulness, " +
                                      "extravagance, inadequacy, guilt, " +
-                                     "vulnerability, wrath, echo_wrath.");
+                                     "vulnerability, wrath, echo_wrath, xenos.");
                     return null;
             }
         }

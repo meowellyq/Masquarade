@@ -30,7 +30,17 @@ namespace Labyrinth
 
             var gsm = GameStateManager.Instance;
 
-            // Фонтан уже пройден — короткое напоминание куда идти
+            // Фаза 3 — монета получена (после Scene18.5) → Scene19
+            if (gsm.gazeboReturnDone)
+            {
+                _isTriggering = true;
+                Debug.Log("[FountainTrigger] Монета получена. Запускаем Scene19.");
+                gsm.currentYarnNode = "Scene19_Start";
+                SceneManager.LoadScene("DialogueScene");
+                return;
+            }
+
+            // Фаза 2 — фонтан пройден, ждём пруда
             if (gsm.fountainDone)
             {
                 if (!gsm.pondVisited)
@@ -38,7 +48,7 @@ namespace Labyrinth
                 return;
             }
 
-            // Оба ключа есть — запускаем диалог
+            // Фаза 1 — оба ключа есть → Scene09
             if (gsm.BothMiniGamesCompleted())
             {
                 _isTriggering = true;
