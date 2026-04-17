@@ -62,7 +62,6 @@ title: Scene18_5_Block_Control
     Ксенобия: Там никого нет.
     <<cutscene hide>>
     <<jump Scene18_5_End>>
-
 -> Моя воля — единственный двигатель.
     <<shift_axis control 10>>
     <<cutscene show gazebo_raven>>
@@ -101,7 +100,6 @@ title: Scene18_5_Block_World
     Ксенобия: Как только он найдётся — я уйду. Не оглядываясь.
     <<cutscene hide>>
     <<jump Scene18_5_End>>
-
 -> Я принимаю странное величие этого места.
     <<shift_axis world -10>>
     <<cutscene show gazebo_column_touch>>
@@ -142,7 +140,6 @@ title: Scene18_5_Block_Truth
     Ксенобия: Потом решу.
     <<cutscene hide>>
     <<jump Scene18_5_End>>
-
 -> Мне нужно домой. Маскарад — не моё.
     <<shift_axis truth 10>>
     <<cutscene show gazebo_boundary>>
