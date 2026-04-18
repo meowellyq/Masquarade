@@ -1,5 +1,6 @@
 ﻿title: Echo_Extravagance_Intro
 ---
+<<set_background bg_minigame_mirror>>
 Экстравагантность: О, наконец-то кто-то пришёл...
 Экстравагантность: Посмотри на это. Моя пудреница. Упала и разбилась.
 Экстравагантность: Осколки везде. Я не могу смотреть на себя такой.
@@ -13,6 +14,7 @@
 
 title: Echo_Extravagance_Outro_Golden
 ---
+<<set_background bg_minigame_mirror>>
 Экстравагантность: Зеркало не врёт...
 Экстравагантность: Я стала старой. И никому не нужной.
 Экстравагантность: *молчит*
@@ -24,6 +26,7 @@ title: Echo_Extravagance_Outro_Golden
 
 title: Echo_Extravagance_Outro_Silver
 ---
+<<set_background bg_minigame_mirror>>
 Экстравагантность: Какая красота! Ни одной морщинки не видно!
 Экстравагантность: Идеальная маска. Идеальное отражение.
 Экстравагантность: *смеётся*
@@ -34,6 +37,7 @@ title: Echo_Extravagance_Outro_Silver
 
 title: Echo_Inadequacy_Intro
 ---
+<<set_background bg_minigame_sculpture>>
 Неполноценность: Они всё падают! Падают и ломаются!
 Неполноценность: Я делаю каркасы, но они не держатся...
 Неполноценность: Нет стержня. Совсем нет стержня внутри.
@@ -47,6 +51,7 @@ title: Echo_Inadequacy_Intro
 
 title: Echo_Inadequacy_Outro_Golden
 ---
+<<set_background bg_minigame_sculpture>>
 Неполноценность: Они выглядят... пугающе.
 Неполноценность: Но я чувствую силу внутри.
 Неполноценность: *тихо*
@@ -58,6 +63,7 @@ title: Echo_Inadequacy_Outro_Golden
 
 title: Echo_Inadequacy_Outro_Silver
 ---
+<<set_background bg_minigame_sculpture>>
 Неполноценность: Безупречно! Гладкие, чистые, сияющие!
 Неполноценность: Никто не узнает, что внутри пустота.
 Неполноценность: Я гений!

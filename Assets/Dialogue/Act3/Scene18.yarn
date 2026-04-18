@@ -15,9 +15,10 @@
 // ═══════════════════════════════════════════════════════
 
 <<set_background bg_gazebo>>
+Ксенобия: Беседка.
 <<show_portrait_left xenobia>>
 
-Ксенобия: Беседка.
+
 Ксенобия: Она всё ещё здесь.
 
 <<show_portrait_right echo_wrath>>

@@ -1,6 +1,14 @@
 ﻿title: Scene09_ReturnToFountain
 ---
+<<set_background bg_garden_fountain>>
 <<check_keys>>
+<<show_portrait_left xenobia>>
+
+Ксенобия приблизилась к фонтану. 
+
+Вода в нём была прозрачной, как стекло, и тихо журчала, словно приветствуя её возвращение.
+
+<<show_portrait_right fontaine>>
 
 Фонтан: Ты вернулась. И не с пустыми руками.
 Фонтан: Дай мне посмотреть что ты принесла.

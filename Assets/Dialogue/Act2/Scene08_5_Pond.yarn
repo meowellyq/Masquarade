@@ -1,7 +1,11 @@
 ﻿title: Scene08_5_Pond
 ---
 <<check_closest_axis>>
-<<cutscene show pond_bench>>
+<<set_background bg_pond>>
+
+Пруд. Скамья. Тишина. И я одна.
+
+<<show_portrait_left xenobia>>
 
 Ксенобия: Здесь тихо. Почти слишком тихо.
 Ксенобия: Мне нужно остановиться и подумать.

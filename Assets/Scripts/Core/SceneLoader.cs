@@ -73,6 +73,12 @@ namespace Core
             storage.SetValue("$control", gsm.control);
             storage.SetValue("$world",   gsm.world);
             storage.SetValue("$truth",   gsm.truth);
+            
+            storage.SetValue("$ending",         (float)gsm.DetermineEnding());
+            storage.SetValue("$guide_type",     gsm.DetermineGuideArchetype());
+            storage.SetValue("$breakdown_type", (float)gsm.DetermineBreakdownType());
+            storage.SetValue("$flask",          gsm.flask);
+            storage.SetValue("$closest_axis",   gsm.FindClosestAxis());
 
             // Ключи
             storage.SetValue("$golden_keys",         gsm.goldenKeys);

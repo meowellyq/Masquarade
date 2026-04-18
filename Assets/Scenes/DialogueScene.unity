@@ -325,6 +325,7 @@ MonoBehaviour:
   extravaganceSprite: {fileID: 21300000, guid: e8b714efcda77034c8962e1151915941, type: 3}
   inadequacySprite: {fileID: 21300000, guid: a2cce82e5b45cbd4ca6386dc16d71665, type: 3}
   guiltSprite: {fileID: 21300000, guid: 6100ad965699a754d86434110c248f52, type: 3}
+  xenosSprite: {fileID: 0}
   vulnerabilitySprite: {fileID: 21300000, guid: 1630aa5be4657f84d86e49640403ec04,
     type: 3}
   wrathSprite: {fileID: 21300000, guid: 4692cd9d53a5987449e751f23b30e669, type: 3}
@@ -1297,6 +1298,7 @@ MonoBehaviour:
   extravaganceSprite: {fileID: 21300000, guid: e8b714efcda77034c8962e1151915941, type: 3}
   inadequacySprite: {fileID: 21300000, guid: a2cce82e5b45cbd4ca6386dc16d71665, type: 3}
   guiltSprite: {fileID: 21300000, guid: 6100ad965699a754d86434110c248f52, type: 3}
+  xenosSprite: {fileID: 0}
   vulnerabilitySprite: {fileID: 21300000, guid: e32780de31215dd4d8452f4005ccabf0,
     type: 3}
   wrathSprite: {fileID: 21300000, guid: 8a2fecda9e1226949b55f9c216a28c3e, type: 3}
@@ -1526,6 +1528,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8d814806beee83347bf6b69db8ab0991, type: 3}
   - {fileID: 21300000, guid: 3d4542b619c2ec949adcfba33a99a2aa, type: 3}
   - {fileID: 21300000, guid: 32c88e000d299eb4abccfad440f7c5d6, type: 3}
+  - {fileID: 21300000, guid: 793c898e7cbdbad4f80a4882f435caf8, type: 3}
+  - {fileID: 21300000, guid: 0e89006ae9d440345b1d573750b48e87, type: 3}
+  - {fileID: 21300000, guid: 7aab22898e0302f4db57de03707ef7d2, type: 3}
+  - {fileID: 21300000, guid: 02232cc5255cbb54c8c4e9489d0dd96f, type: 3}
+  - {fileID: 21300000, guid: 4b72af1aca7d9e94fa4c05346ea0b504, type: 3}
+  - {fileID: 21300000, guid: ee50118647815b047835d61cd738afc8, type: 3}
+  - {fileID: 21300000, guid: a7a1ffda0ce469340a9b55ea872f6a21, type: 3}
   backgroundNames:
   - bg_gates
   - bg_garden_fountain
@@ -1533,6 +1542,13 @@ MonoBehaviour:
   - bg_hall_of_sorrow
   - bg_hall_of_wrath
   - bg_corridor_red
+  - bg_labyrinth_foggy
+  - bg_minigame_mirror
+  - bg_minigame_sculpture
+  - bg_final_space
+  - bg_void
+  - bg_pond
+  - bg_gazebo
 --- !u!114 &1560843556
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,9 @@
 // ═══════════════════════════════════════════════════════
 
 <<set_background bg_garden_fountain>>
+
+Вот и конец пути.
+
 <<show_portrait_left xenobia>>
 <<determine_guide>>
 

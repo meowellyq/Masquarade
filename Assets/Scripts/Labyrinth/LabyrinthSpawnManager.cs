@@ -17,6 +17,9 @@ namespace Labyrinth
 
         [Tooltip("После Scene16/18 — у входа в Зал Печали")]
         public Transform spawnAfterEcho;
+        
+        [Tooltip("После Scene18.5 — выход из беседки к фонтану")]
+        public Transform spawnGazeboExit;
 
         void Start()
         {
@@ -49,6 +52,10 @@ namespace Labyrinth
 
                 case "after_echo":
                     MoveToSpawn(spawnAfterEcho);
+                    break;
+                
+                case "gazebo_exit":
+                    MoveToSpawn(spawnGazeboExit);
                     break;
 
                 case "return_position":

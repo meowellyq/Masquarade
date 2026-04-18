@@ -52,6 +52,8 @@
 // ═══════════════════════════════════════════════════════
 title: Scene20_End1
 ---
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
@@ -139,6 +141,8 @@ title: Scene20_Epilogue_1
 // ═══════════════════════════════════════════════════════
 title: Scene20_End2
 ---
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
@@ -283,6 +287,9 @@ title: Scene20_Epilogue_2Pass
 // ═══════════════════════════════════════════════════════
 title: Scene20_End3
 ---
+
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
@@ -355,6 +362,8 @@ title: Scene20_Epilogue_3
 // ═══════════════════════════════════════════════════════
 title: Scene20_End4
 ---
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
@@ -439,6 +448,8 @@ title: Scene20_Epilogue_4
 // ═══════════════════════════════════════════════════════
 title: Scene20_End5
 ---
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
@@ -499,6 +510,8 @@ title: Scene20_Epilogue_5
 // ═══════════════════════════════════════════════════════
 title: Scene20_End6
 ---
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
@@ -564,6 +577,8 @@ title: Scene20_Epilogue_6
 // ═══════════════════════════════════════════════════════
 title: Scene20_End7
 ---
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
@@ -628,6 +643,8 @@ title: Scene20_Epilogue_7
 // ═══════════════════════════════════════════════════════
 title: Scene20_End8
 ---
+Это очень тихое место.
+
 <<show_portrait_left xenobia>>
 <<show_portrait_right xenos>>
 
