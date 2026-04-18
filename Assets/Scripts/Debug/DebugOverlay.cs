@@ -270,15 +270,10 @@ public class DebugOverlay : MonoBehaviour
 
     private void JumpToNode(string nodeName)
     {
-        var runner = FindObjectOfType<Yarn.Unity.DialogueRunner>();
-        if (runner == null)
-        {
-            GameStateManager.Instance.currentYarnNode = nodeName;
-            SceneManager.LoadScene("DialogueScene");
-            return;
-        }
-        if (runner.IsDialogueRunning) runner.Stop();
-        runner.StartDialogue(nodeName);
+        // Всегда сохраняем ноду и перезагружаем сцену —
+        // это гарантирует что RestoreVariables вызовется с актуальными значениями
+        GameStateManager.Instance.currentYarnNode = nodeName;
+        SceneManager.LoadScene("DialogueScene");
         Debug.Log($"[Debug] Jump → {nodeName}");
     }
 }

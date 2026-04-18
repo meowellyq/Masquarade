@@ -25,6 +25,11 @@
 Сначала — свет. Потом — тишина.
 Потом — голос.
 
+<<show_portrait_left xenobia>>
+<<show_portrait_right xenos>>
+<<show_portrait_right guide>>
+<<hide_all_portraits>>
+
 <<if $ending == 1>>
     <<jump Scene20_End1>>
 <<elseif $ending == 2>>
