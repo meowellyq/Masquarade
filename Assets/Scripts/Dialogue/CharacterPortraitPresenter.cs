@@ -27,6 +27,8 @@ namespace Dialogue
         [SerializeField] private Sprite wrathSprite;
         [SerializeField] private Sprite echoWrathSprite;
 
+        private bool _initialized = false;
+
         private void Awake()
         {
             _instance = this;
@@ -34,10 +36,18 @@ namespace Dialogue
 
         private void Start()
         {
+            // Гарантируем что color.a = 1 (на случай если в Inspector стоит 0)
             if (portraitLeft != null)
+            {
+                portraitLeft.color = Color.white;
                 portraitLeft.gameObject.SetActive(false);
+            }
             if (portraitRight != null)
+            {
+                portraitRight.color = Color.white;
                 portraitRight.gameObject.SetActive(false);
+            }
+            _initialized = true;
         }
 
         private Sprite GetSpriteByName(string characterName)
@@ -54,12 +64,9 @@ namespace Dialogue
                 case "vulnerability":  return vulnerabilitySprite;
                 case "wrath":          return wrathSprite;
                 case "echo_wrath":     return echoWrathSprite;
-                case "xenos": return xenosSprite;
+                case "xenos":          return xenosSprite;
                 default:
-                    Debug.LogWarning($"Неизвестный персонаж: '{characterName}'. " +
-                                     "Доступные: xenobia, guide, fontaine, playfulness, " +
-                                     "extravagance, inadequacy, guilt, " +
-                                     "vulnerability, wrath, echo_wrath, xenos.");
+                    Debug.LogWarning($"Неизвестный персонаж: '{characterName}'.");
                     return null;
             }
         }
@@ -118,8 +125,38 @@ namespace Dialogue
                 Debug.LogWarning($"Спрайт для '{characterName}' не назначен в инспекторе!");
                 return;
             }
+
             portraitImage.sprite = sprite;
+            
+            // ═══ FIX 1: Гарантируем что Image.color видимый ═══
+            portraitImage.color = Color.white;
+            
+            // ═══ FIX 2: Гарантируем что Image компонент включён ═══
+            portraitImage.enabled = true;
+            
+            // ═══ FIX 3: Принудительный toggle — сброс Canvas dirty flag ═══
+            // Без этого Unity может не перестроить rendering после toggle родителя
+            portraitImage.gameObject.SetActive(false);
             portraitImage.gameObject.SetActive(true);
+            
+            // ═══ FIX 4: Гарантируем что родительский контейнер активен ═══
+            Transform parent = portraitImage.transform.parent;
+            while (parent != null)
+            {
+                if (!parent.gameObject.activeSelf)
+                    parent.gameObject.SetActive(true);
+                parent = parent.parent;
+            }
+
+            // Диагностика
+            Debug.Log($"[Portrait] SET '{characterName}' | " +
+                      $"activeSelf={portraitImage.gameObject.activeSelf} | " +
+                      $"activeInHierarchy={portraitImage.gameObject.activeInHierarchy} | " +
+                      $"enabled={portraitImage.enabled} | " +
+                      $"color.a={portraitImage.color.a} | " +
+                      $"size={portraitImage.rectTransform.sizeDelta} | " +
+                      $"sprite={(portraitImage.sprite != null ? portraitImage.sprite.name : "NULL")} | " +
+                      $"canvas={portraitImage.canvas?.name ?? "NULL"}");
         }
     }
 }

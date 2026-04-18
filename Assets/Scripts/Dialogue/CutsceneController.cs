@@ -44,11 +44,17 @@ namespace Dialogue
 
         public void HideCutscene()
         {
-            if (portraitsContainer != null)
-                portraitsContainer.SetActive(true);
-
             if (cutsceneImage != null)
                 cutsceneImage.gameObject.SetActive(false);
+
+            if (portraitsContainer != null)
+            {
+                // Принудительный toggle для сброса Canvas rendering state
+                portraitsContainer.SetActive(false);
+                portraitsContainer.SetActive(true);
+            }
+    
+            Canvas.ForceUpdateCanvases();
         }
 
         Sprite FindSprite(string imageName)
