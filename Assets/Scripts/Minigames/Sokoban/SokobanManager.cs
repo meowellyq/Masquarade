@@ -8,7 +8,8 @@ namespace Minigames.Sokoban
     {
         [Header("Ссылки")]
         public SokobanGrid grid;
-        public Transform   playerTransform;
+        public Transform playerTransform;
+        public SokobanPlayerController playerAnim; 
 
         [Header("Всего слотов для заполнения")]
         public int totalSlots = 3;
@@ -31,7 +32,12 @@ namespace Minigames.Sokoban
             if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))  dir = Vector2Int.left;
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) dir = Vector2Int.right;
 
-            if (dir == Vector2Int.zero) return;
+            if (dir == Vector2Int.zero)
+            {
+                
+                return;
+            }
+
             TryMove(dir);
         }
 
@@ -44,8 +50,8 @@ namespace Minigames.Sokoban
             }
 
 #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.F7)) DebugForceComplete(true);  // было F1
-            if (Input.GetKeyDown(KeyCode.F8)) DebugForceComplete(false); // было F2
+            if (Input.GetKeyDown(KeyCode.F7)) DebugForceComplete(true);
+            if (Input.GetKeyDown(KeyCode.F8)) DebugForceComplete(false);
 #endif
         }
 
@@ -56,17 +62,31 @@ namespace Minigames.Sokoban
 
             PushableObject pushable = GetPushableAt(targetCell);
 
+            bool isPushing = false;
+            bool isPushingStrong = false;
+
             if (pushable != null)
             {
                 bool pushed = pushable.TryPush(dir, grid);
-                if (!pushed) return;
+                if (!pushed)
+                {
+                    playerAnim?.OnIdle();
+                    return;
+                }
+                isPushing = true;
+                isPushingStrong = pushable.isSkeleton;
             }
             else
             {
-                if (!grid.IsCellWalkable(targetCell, true)) return;
+                if (!grid.IsCellWalkable(targetCell, true))
+                {
+                    playerAnim?.OnIdle();
+                    return;
+                }
             }
 
             playerTransform.position = grid.CellToWorld(targetCell);
+            playerAnim?.OnMove(dir, isPushing, isPushingStrong);
             CheckCompletion();
         }
 
@@ -101,10 +121,9 @@ namespace Minigames.Sokoban
             FinishGame(skeletonCount > (filled - skeletonCount));
         }
 
-        // ─── Единая точка завершения ────────────────────────────
         void FinishGame(bool golden)
         {
-            if (_isComplete) return; // защита от двойного вызова
+            if (_isComplete) return;
             _isComplete  = true;
             _isGoldenKey = golden;
 
@@ -113,14 +132,13 @@ namespace Minigames.Sokoban
             if (GameStateManager.Instance != null)
                 GameStateManager.Instance.CompleteMiniGame("inadequacy", _isGoldenKey);
 
-            // Скрываем панель на случай если она уже открыта, потом показываем чисто
             if (completionPanel != null)
             {
                 completionPanel.SetActive(false);
                 completionPanel.SetActive(true);
             }
 
-            CancelInvoke(nameof(ReturnToLabyrinth)); // отменяем предыдущий invoke если был
+            CancelInvoke(nameof(ReturnToLabyrinth));
             Invoke(nameof(ReturnToLabyrinth), 2f);
         }
 
@@ -141,7 +159,7 @@ namespace Minigames.Sokoban
         void DebugForceComplete(bool golden)
         {
             Debug.Log($"[DEBUG] Форсирую завершение Sokoban. Ключ: {(golden ? "ЗОЛОТОЙ" : "СЕРЕБРЯНЫЙ")}");
-            FinishGame(golden); // теперь через единую точку — дублей не будет
+            FinishGame(golden);
         }
 #endif
     }
