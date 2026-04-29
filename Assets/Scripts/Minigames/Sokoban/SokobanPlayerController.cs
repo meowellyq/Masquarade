@@ -7,12 +7,14 @@ namespace Minigames.Sokoban
     [RequireComponent(typeof(SpriteRenderer))]
     public class SokobanPlayerController : MonoBehaviour
     {
-        [Tooltip("Сколько секунд играет анимация движения перед возвратом в Idle")]
-        public float moveAnimDuration = 0.3f;
+        [Tooltip("Сколько секунд играет анимация после шага (подбери под скорость игры)")]
+        public float moveAnimDuration = 0.5f;
 
         private Animator _animator;
         private SpriteRenderer _sr;
         private Coroutine _idleCoroutine;
+        
+
 
         void Awake()
         {
@@ -22,16 +24,22 @@ namespace Minigames.Sokoban
 
         public void OnMove(Vector2Int dir, bool isPushing, bool isPushingStrong)
         {
+            // Сначала сбрасываем оси чтобы переходы сработали чисто
+            _animator.SetFloat("MoveX", 0f);
+            _animator.SetFloat("MoveY", 0f);
+
+            // Устанавливаем новое направление
             _animator.SetFloat("MoveX", dir.x);
             _animator.SetFloat("MoveY", dir.y);
             _animator.SetBool("IsMoving", true);
             _animator.SetBool("IsPushing", isPushing);
             _animator.SetBool("IsPushingStrong", isPushingStrong);
 
+            // Флип влево
             if (Mathf.Abs(dir.x) > 0)
                 _sr.flipX = dir.x < 0;
 
-            // Отменяем предыдущий таймер и запускаем новый
+            // Перезапускаем таймер возврата в Idle
             if (_idleCoroutine != null) StopCoroutine(_idleCoroutine);
             _idleCoroutine = StartCoroutine(ReturnToIdleAfter(moveAnimDuration));
         }

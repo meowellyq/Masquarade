@@ -11,6 +11,9 @@ namespace Minigames.Sokoban
         [Header("Размер сетки")]
         public float cellSize = 1f;
 
+        [Header("Смещение сетки (подбери по позициям стен)")]
+        public Vector2 gridOffset = new Vector2(0.42f, -0.42f);
+
         [Header("Стены (статичные объекты с тегом 'Wall')")]
         [Tooltip("Заполняется автоматически в Start, или назначь вручную")]
         public Transform[] walls;
@@ -20,7 +23,6 @@ namespace Minigames.Sokoban
 
         void Start()
         {
-            // Автосбор стен по тегу если не назначены вручную
             if (walls == null || walls.Length == 0)
             {
                 var wallObjects = GameObject.FindGameObjectsWithTag("Wall");
@@ -29,33 +31,53 @@ namespace Minigames.Sokoban
                     walls[i] = wallObjects[i].transform;
             }
 
-            // Автосбор слотов если не назначены вручную
             if (slots == null || slots.Length == 0)
                 slots = FindObjectsOfType<SokobanSlot>();
+
+            // Снап игрока
+            var player = GameObject.FindWithTag("Player");
+            if (player != null)
+            {
+                Vector2Int cell = WorldToCell(player.transform.position);
+                player.transform.position = CellToWorld(cell);
+            }
+
+            // Снап ящиков
+            var allPushables = FindObjectsOfType<PushableObject>();
+            foreach (var obj in allPushables)
+            {
+                Vector2Int cell = WorldToCell(obj.transform.position);
+                obj.transform.position = CellToWorld(cell);
+            }
+
+            // Снап слотов
+            foreach (var slot in slots)
+            {
+                if (slot == null) continue;
+                Vector2Int cell = WorldToCell(slot.transform.position);
+                slot.transform.position = CellToWorld(cell);
+            }
         }
 
         public Vector2Int WorldToCell(Vector3 worldPos)
         {
             return new Vector2Int(
-                Mathf.RoundToInt(worldPos.x / cellSize),
-                Mathf.RoundToInt(worldPos.y / cellSize)
+                Mathf.RoundToInt((worldPos.x - gridOffset.x) / cellSize),
+                Mathf.RoundToInt((worldPos.y - gridOffset.y) / cellSize)
             );
         }
 
         public Vector3 CellToWorld(Vector2Int cell)
         {
-            return new Vector3(cell.x * cellSize, cell.y * cellSize, 0);
+            return new Vector3(
+                cell.x * cellSize + gridOffset.x,
+                cell.y * cellSize + gridOffset.y,
+                0
+            );
         }
 
-        /// <summary>
-        /// Проходима ли клетка?
-        /// Скелет НЕ может войти на клетку со стеной.
-        /// Манекен тоже не может (гнилой пол — это отдельный тег "RottenFloor", опционально).
-        /// </summary>
         public bool IsCellWalkable(Vector2Int cell, bool isSkeleton)
         {
-            Vector3 worldPos = CellToWorld(cell);
-
             foreach (var wall in walls)
             {
                 if (wall == null) continue;
@@ -63,7 +85,6 @@ namespace Minigames.Sokoban
                 if (wallCell == cell) return false;
             }
 
-            // Проверка других PushableObject (нельзя толкать два сразу)
             var allObjects = FindObjectsOfType<PushableObject>();
             foreach (var obj in allObjects)
             {

@@ -20,7 +20,22 @@ namespace Minigames.Sokoban
         private bool _isComplete  = false;
         private bool _isGoldenKey = false;
 
-        void Start() { }
+        void Start()
+        {
+            // Снапнуть игрока к сетке
+            Vector2Int playerCell = grid.WorldToCell(playerTransform.position);
+            playerTransform.position = grid.CellToWorld(playerCell);
+
+            // Снапнуть все ящики к сетке
+            var allPushables = FindObjectsOfType<PushableObject>();
+            foreach (var obj in allPushables)
+            {
+                Vector2Int cell = grid.WorldToCell(obj.transform.position);
+                obj.transform.position = grid.CellToWorld(cell);
+            }
+            
+            
+        }
 
         void Update()
         {
@@ -57,9 +72,11 @@ namespace Minigames.Sokoban
 
         void TryMove(Vector2Int dir)
         {
+            
+            
             Vector2Int playerCell = grid.WorldToCell(playerTransform.position);
             Vector2Int targetCell = playerCell + dir;
-
+            Debug.Log($"Игрок в клетке {playerCell}, хочет в {targetCell}");
             PushableObject pushable = GetPushableAt(targetCell);
 
             bool isPushing = false;
@@ -154,6 +171,11 @@ namespace Minigames.Sokoban
             Debug.Log($"[Sokoban] Переход в DialogueScene, нода: {outroNode}");
             SceneManager.LoadScene("DialogueScene");
         }
+        
+        public void ResetLevel()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
 
 #if UNITY_EDITOR
         void DebugForceComplete(bool golden)
@@ -163,4 +185,6 @@ namespace Minigames.Sokoban
         }
 #endif
     }
+    
+    
 }
