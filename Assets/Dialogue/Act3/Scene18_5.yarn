@@ -57,7 +57,7 @@ title: Scene18_5_Block_Control
 Ксенобия: Особенно сейчас — когда впереди последний шаг.
 
 -> Без него я лишь потерянная тень.
-    <<shift_axis control -10>>
+    <<shift_axis control -20>>
     <<cutscene show gazebo_cage_birds>>
     Ксенобия: Я оглядываюсь.
     Ксенобия: Его нет рядом — и это ощущается как потеря.
@@ -68,7 +68,7 @@ title: Scene18_5_Block_Control
     <<cutscene hide>>
     <<jump Scene18_5_End>>
 -> Моя воля — единственный двигатель.
-    <<shift_axis control 10>>
+    <<shift_axis control 20>>
     <<cutscene show gazebo_raven>>
     Ксенобия: Я смотрю вверх.
     Ксенобия: На ветке — ворон.
@@ -95,7 +95,7 @@ title: Scene18_5_Block_World
 Ксенобия: Вопрос только — кем я хочу быть в этих правилах.
 
 -> Я презираю этот мир и его логику.
-    <<shift_axis world 10>>
+    <<shift_axis world 20>>
     <<cutscene show gazebo_turn_away>>
     Ксенобия: Я резко отворачиваюсь от беседки.
     Ксенобия: Смотрю туда — на лабиринт. На далёкие искажённые очертания.
@@ -106,7 +106,7 @@ title: Scene18_5_Block_World
     <<cutscene hide>>
     <<jump Scene18_5_End>>
 -> Я принимаю странное величие этого места.
-    <<shift_axis world -10>>
+    <<shift_axis world -20>>
     <<cutscene show gazebo_column_touch>>
     Ксенобия: Я кладу ладонь на колонну.
     Ксенобия: Камень холодный. На нём — резьба.
@@ -134,7 +134,7 @@ title: Scene18_5_Block_Truth
 Ксенобия: Или я уже начинаю верить в то, во что хочу верить.
 
 -> Позолота Маскарада — это то, чего мне не хватало.
-    <<shift_axis truth -10>>
+    <<shift_axis truth -20>>
     <<cutscene show gazebo_garden_glow>>
     Ксенобия: Я смотрю на сад.
     Ксенобия: Статуи. Цветущие кустарники. Свет который не гаснет.
@@ -146,7 +146,7 @@ title: Scene18_5_Block_Truth
     <<cutscene hide>>
     <<jump Scene18_5_End>>
 -> Мне нужно домой. Маскарад — не моё.
-    <<shift_axis truth 10>>
+    <<shift_axis truth 20>>
     <<cutscene show gazebo_boundary>>
     Ксенобия: Взгляд уходит в сторону.
     Ксенобия: Беседка остаётся на краю зрения.
