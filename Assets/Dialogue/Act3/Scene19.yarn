@@ -8,11 +8,11 @@
 // 5 вариантов желания — определяют финальный вектор.
 //
 // Выборы:
-//   1. Сорвать маски      → truth +15, world +10
-//   2. Счастье здесь      → truth -15, world -10
-//   3. Забрать сама       → control +15, world +10
-//   4. Скажи как спасти   → control -15, world -10
-//   5. Любая цена         → truth +10, control -10
+//   1. Сорвать маски      → truth +15, world +15
+//   2. Счастье здесь      → truth -15, world -15
+//   3. Забрать сама       → control +15, world +15
+//   4. Скажи как спасти   → control -15, world -15
+//   5. Любая цена         → truth +10, control -15
 // ═══════════════════════════════════════════════════════
 
 <<set_background bg_garden_fountain>>
@@ -49,23 +49,23 @@ title: Scene19_Choice
 ---
 ->«Я хочу сорвать все маски»
     <<shift_axis truth 15>>
-    <<shift_axis world 10>>
+    <<shift_axis world 15>>
     <<jump Scene19_Unmask>>
 ->«Я хочу, чтобы мы были счастливы... здесь»
     <<shift_axis truth -15>>
-    <<shift_axis world -10>>
+    <<shift_axis world -15>>
     <<jump Scene19_Surrender>>
 ->«Я забираю его. Сама»
     <<shift_axis control 15>>
-    <<shift_axis world 10>>
+    <<shift_axis world 15>>
     <<jump Scene19_Take>>
 ->«Просто скажи мне, как его спасти»
     <<shift_axis control -15>>
-    <<shift_axis world -10>>
+    <<shift_axis world -15>>
     <<jump Scene19_Instruct>>
 ->«Я приму любую цену, лишь бы увидеть его»
     <<shift_axis truth 10>>
-    <<shift_axis control -10>>
+    <<shift_axis control -15>>
     <<jump Scene19_Sacrifice>>
 ===
 
