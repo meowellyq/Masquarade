@@ -3,19 +3,31 @@ using UnityEngine;
 namespace Minigames.PowderPuzzle
 {
     /// <summary>
-    /// Осколок зеркала (Drag & Drop + переворот ПКМ)
+    /// Осколок зеркала: drag & drop + переворот ПКМ + настраиваемая стартовая сторона.
     /// </summary>
     public class PuzzlePiece : MonoBehaviour
     {
+        public enum InitialSideMode
+        {
+            Clean,
+            Decorated,
+            Random
+        }
+
         [Header("Config")]
         public int pieceID = 0;
         public Transform correctSlot;
         public float snapDistance = 0.5f;
 
+        [Header("Initial State")]
+        [Tooltip("Какая сторона будет видна при старте сцены")]
+        public InitialSideMode initialSide = InitialSideMode.Random;
+
         [Header("Sides")]
-        [Tooltip("Спрайт чистой стороны (можно оставить пустым — будет использован текущий)")]
+        [Tooltip("Правдивая / чистая сторона")]
         public Sprite cleanSide;
-        [Tooltip("Спрайт стороны с наклейками (можно оставить пустым — будет использован текущий)")]
+
+        [Tooltip("Ложная / украшенная сторона")]
         public Sprite decoratedSide;
 
         private bool _isCleanSideUp = true;
@@ -27,9 +39,31 @@ namespace Minigames.PowderPuzzle
         {
             _spriteRenderer = GetComponent<SpriteRenderer>();
 
-            // Если спрайты не назначены — запомнить текущий как заглушку для обеих сторон
-            if (cleanSide == null)    cleanSide    = _spriteRenderer.sprite;
-            if (decoratedSide == null) decoratedSide = _spriteRenderer.sprite;
+            if (cleanSide == null)
+                cleanSide = _spriteRenderer.sprite;
+
+            if (decoratedSide == null)
+                decoratedSide = _spriteRenderer.sprite;
+
+            ApplyInitialSide();
+        }
+
+        void ApplyInitialSide()
+        {
+            switch (initialSide)
+            {
+                case InitialSideMode.Clean:
+                    SetSide(true);
+                    break;
+
+                case InitialSideMode.Decorated:
+                    SetSide(false);
+                    break;
+
+                case InitialSideMode.Random:
+                    SetSide(Random.value >= 0.5f);
+                    break;
+            }
         }
 
         void Update()
@@ -40,14 +74,23 @@ namespace Minigames.PowderPuzzle
 
         void FlipPiece()
         {
-            _isCleanSideUp = !_isCleanSideUp;
-            // Меняем цвет как визуальную подсказку если спрайты одинаковые
-            _spriteRenderer.sprite = _isCleanSideUp ? cleanSide : decoratedSide;
-            _spriteRenderer.color  = _isCleanSideUp
-                ? Color.white
-                : new Color(1f, 0.8f, 0.9f); // розоватый = "украшенная" сторона
+            SetSide(!_isCleanSideUp);
+
             Debug.Log($"[PuzzlePiece] Осколок {pieceID} перевёрнут. " +
-                      $"Сторона: {(_isCleanSideUp ? "ЧИСТАЯ" : "НАКЛЕЙКИ")}");
+                      $"Сторона: {(_isCleanSideUp ? "ПРАВДА" : "ЛОЖЬ")}");
+        }
+
+        void SetSide(bool cleanSideUp)
+        {
+            _isCleanSideUp = cleanSideUp;
+
+            if (_spriteRenderer == null)
+                _spriteRenderer = GetComponent<SpriteRenderer>();
+
+            _spriteRenderer.sprite = _isCleanSideUp ? cleanSide : decoratedSide;
+
+            // Важно: не красим арт розовым или зелёным, чтобы не портить изображение.
+            _spriteRenderer.color = Color.white;
         }
 
         bool IsMouseOver()
@@ -60,16 +103,20 @@ namespace Minigames.PowderPuzzle
         void OnMouseDown()
         {
             if (_isPlaced) return;
+
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
+
             _dragOffset = transform.position - mousePos;
         }
 
         void OnMouseDrag()
         {
             if (_isPlaced) return;
+
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             mousePos.z = 0;
+
             transform.position = mousePos + _dragOffset;
         }
 
@@ -81,12 +128,14 @@ namespace Minigames.PowderPuzzle
             {
                 transform.position = correctSlot.position;
                 _isPlaced = true;
-                // Зафиксировать цвет при укладке
-                _spriteRenderer.color = _isCleanSideUp
-                    ? new Color(0.8f, 1f, 0.8f)  // зеленоватый = встал на место чистой стороной
-                    : new Color(1f, 0.7f, 0.85f); // розовый = встал украшенной
+
+                // Оставляем реальный арт без цветной заливки.
+                _spriteRenderer.color = Color.white;
+
                 FindObjectOfType<PuzzleManager_Extravagance>()?.OnPiecePlaced(_isCleanSideUp);
-                Debug.Log($"[PuzzlePiece] Осколок {pieceID} установлен в слот.");
+
+                Debug.Log($"[PuzzlePiece] Осколок {pieceID} установлен в слот. " +
+                          $"Сторона: {(_isCleanSideUp ? "ПРАВДА" : "ЛОЖЬ")}");
             }
         }
     }
