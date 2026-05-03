@@ -1561,11 +1561,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   backgroundImage: {fileID: 1560843556}
   backgrounds:
-  - {fileID: 21300000, guid: 530f1a31053376146899bdd3e545c8bc, type: 3}
+  - {fileID: 21300000, guid: 857d03d814ccbc845be4245cc8ba29e5, type: 3}
   - {fileID: 21300000, guid: 9cd8d4bfdb007b844b9cff8d8f3b22e8, type: 3}
-  - {fileID: 21300000, guid: 11e4889d1c2e716429d7c3fd5af7c279, type: 3}
-  - {fileID: 21300000, guid: 8d814806beee83347bf6b69db8ab0991, type: 3}
-  - {fileID: 21300000, guid: 3d4542b619c2ec949adcfba33a99a2aa, type: 3}
+  - {fileID: 21300000, guid: eefec3d1fd73f1247aca3c332d636bc4, type: 3}
+  - {fileID: 21300000, guid: c1d85a379f3c3d1458afac0d34c2af20, type: 3}
+  - {fileID: 21300000, guid: 838a572a5a04eea4bbedacd631cb1aa3, type: 3}
   - {fileID: 21300000, guid: 32c88e000d299eb4abccfad440f7c5d6, type: 3}
   - {fileID: 21300000, guid: 793c898e7cbdbad4f80a4882f435caf8, type: 3}
   - {fileID: 21300000, guid: 0e89006ae9d440345b1d573750b48e87, type: 3}
@@ -1688,6 +1688,7 @@ MonoBehaviour:
   wrathEchoDone: 0
   flask: 
   gazeboReturnDone: 0
+  scene17Done: 0
 --- !u!4 &1875181534
 Transform:
   m_ObjectHideFlags: 0
@@ -1756,10 +1757,10 @@ MonoBehaviour:
   panel: {fileID: 2098034518}
   overlay: {fileID: 215127883}
   flaskImage: {fileID: 1463669571}
-  flaskEmpty: {fileID: 0}
-  flaskBlack: {fileID: 0}
-  flaskPink: {fileID: 0}
-  flaskGrey: {fileID: 0}
+  flaskEmpty: {fileID: 21300000, guid: cb46a12a0af87e049815c01a7fa18ef5, type: 3}
+  flaskBlack: {fileID: 21300000, guid: 79143dc25c66a164ba3a4df9428f9e47, type: 3}
+  flaskPink: {fileID: 21300000, guid: 3a75401ba553a3140a78e3fc8ba74267, type: 3}
+  flaskGrey: {fileID: 21300000, guid: a09e1fa990d077147a4872bcfae2d31e, type: 3}
   overlayAlpha: 0.6
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

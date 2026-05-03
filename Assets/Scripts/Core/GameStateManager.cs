@@ -50,6 +50,7 @@ namespace Core
         public bool wrathEchoDone = false;
         public string flask = "";  
         public bool gazeboReturnDone = false;
+        public bool scene17Done = false;  
         // ─── Инициализация ─────────────────────────────────────
         private void Awake()
         {
@@ -80,7 +81,7 @@ namespace Core
                     Debug.Log($"[Ось] Truth (Самооб./Честн.): {truth}");
                     break;
                 default:
-                    Debug.LogWarning($"Неизвестная ось: {axisName}. Доступные: control, world, truth");
+                    Debug.LogWarning($"[Неизвестная ось: {axisName}. Доступные: control, world, truth");
                     break;
             }
             UpdateMemoryLoss();

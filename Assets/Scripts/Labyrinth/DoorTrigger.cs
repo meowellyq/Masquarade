@@ -33,16 +33,24 @@ namespace Labyrinth
             {
                 _isTriggering = true;
 
-                // Если флакон получен — запускаем Scene17 вместо Scene10
-                if (gsm.wrathEchoDone && !string.IsNullOrEmpty(gsm.flask))
+                // Если флакон получен И Scene17 ещё не была — запускаем Scene17
+                if (gsm.wrathEchoDone && !string.IsNullOrEmpty(gsm.flask) && !gsm.scene17Done)
                 {
                     Debug.Log("[DoorTrigger] Флакон есть — переход в Scene17.");
+                    gsm.scene17Done = true;  // ← блокируем повторный вход сразу
                     gsm.currentYarnNode = "Scene17_Inadequacy";
                 }
-                else
+                else if (!gsm.scene17Done)
                 {
                     Debug.Log("[DoorTrigger] Обычный вход — запускаем " + entryYarnNode);
                     gsm.currentYarnNode = entryYarnNode;
+                }
+                else
+                {
+                    // Scene17 уже была — дверь больше не реагирует
+                    Debug.Log("[DoorTrigger] Scene17 уже пройдена, вход заблокирован.");
+                    _isTriggering = false;
+                    return;
                 }
 
                 SceneManager.LoadScene("DialogueScene");

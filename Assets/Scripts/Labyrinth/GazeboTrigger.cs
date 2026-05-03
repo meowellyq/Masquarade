@@ -35,6 +35,9 @@ namespace Labyrinth
             if (!gsm.wrathEchoDone) return;
             if (string.IsNullOrEmpty(gsm.flask) || gsm.flask == "empty") return;
 
+            // ← Блокируем повтор через постоянный флаг GSM
+            if (gsm.gazeboReturnDone) return;
+
             _triggered = true;
             gsm.currentYarnNode = yarnNode;
             Debug.Log($"[GazeboTrigger] Условия выполнены, переход в: {yarnNode}");
