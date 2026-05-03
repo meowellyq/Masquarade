@@ -184,6 +184,7 @@ title: Scene18_5_End
 <<endif>>
 
 <<hide_all_portraits>>
+<<set_gazebo_return_done>>
 <<set_spawn gazebo_exit>>
 <<set_yarn_node Scene19_Start>>
 <<load_scene LabyrinthScene>>
