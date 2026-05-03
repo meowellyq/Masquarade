@@ -337,7 +337,8 @@ public class YarnCommands : MonoBehaviour
     [YarnCommand("show_flask")]
     public static void ShowFlask(string flaskType)
     {
-        var controller = Object.FindObjectOfType<FlaskDisplayController>();
+        // true = искать в том числе неактивные объекты
+        var controller = Object.FindObjectOfType<FlaskDisplayController>(true);
         if (controller == null) { Debug.LogWarning("[Flask] FlaskDisplayController не найден"); return; }
         controller.Show(flaskType);
         Debug.Log($"[Flask] Показываем флакон: {flaskType}");
