@@ -222860,6 +222860,7 @@ GameObject:
   - component: {fileID: 987693567}
   - component: {fileID: 987693565}
   - component: {fileID: 987693569}
+  - component: {fileID: 987693570}
   m_Layer: 0
   m_Name: EchoTrigger_Extravagance
   m_TagString: Untagged
@@ -223000,6 +223001,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16, y: 16}
   m_EdgeRadius: 0
+--- !u!95 &987693570
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 987693564}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b1d3ead7a3cfd5640b911bcde34b794d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1033960809
 GameObject:
   m_ObjectHideFlags: 0
@@ -223984,6 +224006,7 @@ GameObject:
   - component: {fileID: 1650137988}
   - component: {fileID: 1650137987}
   - component: {fileID: 1650137990}
+  - component: {fileID: 1650137991}
   m_Layer: 0
   m_Name: EchoTrigger_Wrath
   m_TagString: Untagged
@@ -224124,6 +224147,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16, y: 16}
   m_EdgeRadius: 0
+--- !u!95 &1650137991
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1650137985}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 06a8f1a869c9a494ebc5bcfc84b29960, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1657867477
 GameObject:
   m_ObjectHideFlags: 0
@@ -225437,6 +225481,7 @@ GameObject:
   - component: {fileID: 2033977594}
   - component: {fileID: 2033977592}
   - component: {fileID: 2033977596}
+  - component: {fileID: 2033977597}
   m_Layer: 0
   m_Name: EchoTrigger_Inadequacy
   m_TagString: Untagged
@@ -225577,6 +225622,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 16, y: 16}
   m_EdgeRadius: 0
+--- !u!95 &2033977597
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2033977591}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c980704d1321ee94fa05e5db4ad9740d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &2065032382
 GameObject:
   m_ObjectHideFlags: 0
