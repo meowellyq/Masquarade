@@ -7,7 +7,7 @@ namespace Minigames.Sokoban
         [Header("Визуал")]
         // Было: белый полупрозрачный — сливался со скелетом
         // Стало: жёлтый контурный — сразу видно "сюда нужно поставить"
-        public Color emptyColor     = new Color(1f, 0.85f, 0f, 0.5f);   // жёлтый — "цель"
+        public Color emptyColor = new Color(1f, 0.85f, 0f, 1f);   // жёлтый — "цель"
         public Color skeletonColor  = new Color(0.35f, 0.35f, 0.35f);   // тёмно-серый
         public Color mannequinColor = new Color(1f, 0.75f, 0.55f);      // оранжево-бежевый
 
