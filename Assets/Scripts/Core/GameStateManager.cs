@@ -40,7 +40,7 @@ namespace Core
         public string spawnPointId = "default"; 
         public Vector3 labyrinthReturnPosition = Vector3.zero;
 
-        // ─── Флаги состояния ────────────────────────────────────
+        // ─── Флаги состояния ─Ы───────────────────────────────────
         [Header("Состояние")]
         public bool memoryLoss = false;
         public bool fountainDone = false;

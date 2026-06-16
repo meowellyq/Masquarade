@@ -1633,7 +1633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808aa118e67e8da41b7faf5fc84c9ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyColor: {r: 1, g: 1, b: 1, a: 0.3}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   skeletonColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   mannequinColor: {r: 1, g: 0.95, b: 0.8, a: 1}
 --- !u!212 &549431289
@@ -4207,7 +4207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808aa118e67e8da41b7faf5fc84c9ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyColor: {r: 1, g: 1, b: 1, a: 0.3}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   skeletonColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   mannequinColor: {r: 1, g: 0.95, b: 0.8, a: 1}
 --- !u!212 &1264721907
@@ -7633,7 +7633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 808aa118e67e8da41b7faf5fc84c9ac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyColor: {r: 1, g: 1, b: 1, a: 0.3}
+  emptyColor: {r: 1, g: 1, b: 1, a: 1}
   skeletonColor: {r: 0.4, g: 0.4, b: 0.4, a: 1}
   mannequinColor: {r: 1, g: 0.95, b: 0.8, a: 1}
 --- !u!212 &1965724618

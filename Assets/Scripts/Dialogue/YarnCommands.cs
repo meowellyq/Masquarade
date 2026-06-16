@@ -15,8 +15,6 @@ public class YarnCommands : MonoBehaviour
         return storage;
     }
 
-    // ─── Сдвиг оси ─────────────────────────────────────────
-    // Yarn: shift_axis control 10
     [YarnCommand("shift_axis")]
     public static void ShiftAxis(string axisName, float value)
     {
@@ -57,10 +55,6 @@ public class YarnCommands : MonoBehaviour
             storage.SetValue("$both_keys_collected", GameStateManager.Instance.BothKeysCollected());
         }
     }
-
-    // ─── Перепутье: определить самую неопределённую ось ────
-    // Yarn: check_closest_axis
-    // После вызова: if $closest_axis == "control"
     [YarnCommand("check_closest_axis")]
     public static void CheckClosestAxis()
     {
@@ -72,9 +66,6 @@ public class YarnCommands : MonoBehaviour
         storage?.SetValue("$closest_axis", axis);
     }
 
-    // ─── Определить финал ──────────────────────────────────
-    // Yarn: determine_ending
-    // После вызова: if $ending == 1
     [YarnCommand("determine_ending")]
     public static void DetermineEnding()
     {
@@ -85,10 +76,6 @@ public class YarnCommands : MonoBehaviour
         var storage = GetStorage();
         storage?.SetValue("$ending", ending);
     }
-
-    // ─── Определить архетип Проводника ─────────────────────
-    // Yarn: determine_guide
-    // После вызова: if $guide_type == "iconoclast"
     [YarnCommand("determine_guide")]
     public static void DetermineGuide()
     {
@@ -99,10 +86,6 @@ public class YarnCommands : MonoBehaviour
         var storage = GetStorage();
         storage?.SetValue("$guide_type", archetype);
     }
-
-    // ─── Определить тип Слома ──────────────────────────────
-    // Yarn: determine_breakdown
-    // После вызова: if $breakdown_type == 1
     [YarnCommand("determine_breakdown")]
     public static void DetermineBreakdown()
     {
@@ -113,10 +96,6 @@ public class YarnCommands : MonoBehaviour
         var storage = GetStorage();
         storage?.SetValue("$breakdown_type", type);
     }
-
-    // ─── Определить содержимое Флакона ─────────────────────
-    // Yarn: determine_flask
-    // После вызова: if $flask == "black"
     [YarnCommand("determine_flask")]
     public static void DetermineFlask()
     {
@@ -127,10 +106,6 @@ public class YarnCommands : MonoBehaviour
         var storage = GetStorage();
         storage?.SetValue("$flask", flask);
     }
-
-    // ─── Проверить потерю памяти ────────────────────────────
-    // Yarn: check_memory
-    // После вызова: if $memory_loss == true
     [YarnCommand("check_memory")]
     public static void CheckMemory()
     {
@@ -141,10 +116,6 @@ public class YarnCommands : MonoBehaviour
         var storage = GetStorage();
         storage?.SetValue("$memory_loss", loss);
     }
-
-    // ─── Проверить тип ключей ───────────────────────────────
-    // Yarn: check_keys
-    // После вызова: if $key_type == "golden"
     [YarnCommand("check_keys")]
     public static void CheckKeys()
     {
